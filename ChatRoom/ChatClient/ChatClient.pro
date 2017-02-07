@@ -28,7 +28,6 @@ SOURCES += main.cpp\
     LoginForm.cpp
 
 HEADERS  += \
-    dbservice.h \
     LoginForm.h
 
 CONFIG +=C++11

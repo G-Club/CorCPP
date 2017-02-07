@@ -176,6 +176,7 @@ Makefile: ../../ChatServer.pro C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/win32-g++/qm
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/features/win32/qt_config.prf \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/win32-g++/qmake.conf \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/features/exclusive_builds.prf \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/features/toolchain.prf \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/features/default_pre.prf \
@@ -202,6 +203,7 @@ Makefile: ../../ChatServer.pro C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/win32-g++/qm
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/lib/qtmaind.prl \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/lib/Qt5Widgets.prl \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/lib/Qt5Gui.prl \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/lib/Qt5Sql.prl \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/lib/Qt5Core.prl
 	$(QMAKE) -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" -o Makefile ..\..\ChatServer.pro
 C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/features/spec_pre.prf:
@@ -321,6 +323,7 @@ C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/features/qt_config.prf:
 C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/features/win32/qt_config.prf:
 C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/win32-g++/qmake.conf:
 C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/features/spec_post.prf:
+.qmake.stash:
 C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/features/exclusive_builds.prf:
 C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/features/toolchain.prf:
 C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/features/default_pre.prf:
@@ -347,6 +350,7 @@ C:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/features/lex.prf:
 C:/Qt/Qt5.7.1/5.7/mingw53_32/lib/qtmaind.prl:
 C:/Qt/Qt5.7.1/5.7/mingw53_32/lib/Qt5Widgets.prl:
 C:/Qt/Qt5.7.1/5.7/mingw53_32/lib/Qt5Gui.prl:
+C:/Qt/Qt5.7.1/5.7/mingw53_32/lib/Qt5Sql.prl:
 C:/Qt/Qt5.7.1/5.7/mingw53_32/lib/Qt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" -o Makefile ..\..\ChatServer.pro
