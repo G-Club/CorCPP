@@ -1,10 +1,13 @@
-#include"LoginForm.h"
+
 #include<QApplication>
 #include<QtSql>
 #include<QDialog>
 #include<QFileDialog>
 #include<QMessageBox>
 #include<iostream>
+#include"headers/forms/LoginForm.h"
+#include "headers/tools/cJSON.h"
+
 using namespace std;
 
 
@@ -27,6 +30,10 @@ int main(int argc, char *argv[])
     window.show();
 
 
+   char *out="" ;
+
+
+   free(out);//释放空间
     a.exec();
 
     return 1;

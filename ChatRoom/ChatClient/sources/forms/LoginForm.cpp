@@ -1,4 +1,4 @@
-#include "LoginForm.h"
+#include "headers/forms/LoginForm.h"
 #include<QMessageBox>
 
 LoginForm::LoginForm(QWidget *parent): QMainWindow(parent)

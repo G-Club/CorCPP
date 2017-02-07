@@ -23,11 +23,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    dbservicce.cpp
+HEADERS  +=  headers/forms/mainwindow.h\
+    headers/model/User.h\
+    headers/tools/cJSON.h
 
-HEADERS  += mainwindow.h \
-    dbservice.h
+SOURCES +=  main.cpp\
+    sources/forms/mainwindow.cpp\
+    sources/model/User.cpp\
+    sources/tools/cJSON.c
 QT+=sql
 QT+=core

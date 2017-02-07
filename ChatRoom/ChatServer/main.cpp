@@ -1,11 +1,11 @@
-#include "mainwindow.h"
+#include "headers/forms/mainwindow.h"
 #include <QApplication>
-#include<QtSql>
-#include<QDialog>
-#include<QFileDialog>
-#include<QMessageBox>
-#include"dbservice.h"
-#include<iostream>
+#include <QtSql>
+#include <QDialog>
+#include <QFileDialog>
+#include <QMessageBox>
+#include "headers/tools/dbservice.h"
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 
 
 
-
+   /*
 
     DBServicce db ;
     //db.DatabaseName="chat";
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
         QMessageBox::information(0,QString("提示"),QString("error:\n"));
     }
 
-
+*/
 
 
     return a.exec();
