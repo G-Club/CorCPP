@@ -14,7 +14,7 @@ CXX           = g++
 DEFINES       = -DUNICODE -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -pipe -fno-keep-inline-dllexport -g -Wall -Wextra $(DEFINES)
 CXXFLAGS      = -pipe -fno-keep-inline-dllexport -g -std=gnu++11 -frtti -Wall -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I..\..\..\ChatClient -I. -IC:\Qt\Qt5.7.1\5.7\mingw53_32\include -IC:\Qt\Qt5.7.1\5.7\mingw53_32\include\QtWidgets -IC:\Qt\Qt5.7.1\5.7\mingw53_32\include\QtGui -IC:\Qt\Qt5.7.1\5.7\mingw53_32\include\QtANGLE -IC:\Qt\Qt5.7.1\5.7\mingw53_32\include\QtSql -IC:\Qt\Qt5.7.1\5.7\mingw53_32\include\QtCore -Idebug -IC:\Qt\Qt5.7.1\5.7\mingw53_32\mkspecs\win32-g++ 
+INCPATH       = -I..\..\..\ChatClient -I. -IC:\Qt\Qt5.7.1\5.7\mingw53_32\include -IC:\Qt\Qt5.7.1\5.7\mingw53_32\include\QtWidgets -IC:\Qt\Qt5.7.1\5.7\mingw53_32\include\QtGui -IC:\Qt\Qt5.7.1\5.7\mingw53_32\include\QtANGLE -IC:\Qt\Qt5.7.1\5.7\mingw53_32\include\QtSql -IC:\Qt\Qt5.7.1\5.7\mingw53_32\include\QtCore -Idebug -I. -IC:\Qt\Qt5.7.1\5.7\mingw53_32\mkspecs\win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
 LIBS        =        -lmingw32 -LC:\Qt\Qt5.7.1\5.7\mingw53_32\lib C:\Qt\Qt5.7.1\5.7\mingw53_32\lib\libqtmaind.a -lshell32 -LC:\utils\my_sql\my_sql\lib -LC:\utils\postgresql\pgsql\lib C:\Qt\Qt5.7.1\5.7\mingw53_32\lib\libQt5Widgetsd.a C:\Qt\Qt5.7.1\5.7\mingw53_32\lib\libQt5Guid.a C:\Qt\Qt5.7.1\5.7\mingw53_32\lib\libQt5Sqld.a C:\Qt\Qt5.7.1\5.7\mingw53_32\lib\libQt5Cored.a 
@@ -55,7 +55,8 @@ OBJECTS       = debug/main.o \
 
 DIST          =  ..\..\headers\forms\LoginForm.h \
 		..\..\headers\models\User.h \
-		..\..\headers\tools\cJSON.h ..\..\main.cpp \
+		..\..\headers\tools\cJSON.h \
+		..\..\headers\ui\ui_loginform.h ..\..\main.cpp \
 		..\..\sources\forms\LoginForm.cpp \
 		..\..\sources\models\User.cpp \
 		..\..\sources\tools\cJSON.c
@@ -69,7 +70,7 @@ DESTDIR_TARGET = debug\ChatClient.exe
 first: all
 all: Makefile.Debug  $(DESTDIR_TARGET)
 
-$(DESTDIR_TARGET):  $(OBJECTS) 
+$(DESTDIR_TARGET): ui_loginform.h $(OBJECTS) 
 	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS)  $(LIBS)
 
 qmake: FORCE
@@ -203,21 +204,48 @@ debug/moc_LoginForm.cpp: C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QMainWin
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtouchdevice.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qicon.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QDialog \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QLineEdit \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qlineedit.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextcursor.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextformat.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qpen.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextoption.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QLabel \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qlabel.h \
+		../../headers/ui/ui_loginform.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QAction \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qaction.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qactiongroup.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QApplication \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qapplication.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtCore/qcoreapplication.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtCore/qeventloop.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qdesktopwidget.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qguiapplication.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qinputmethod.h \
 		../../headers/forms/LoginForm.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/bin/moc.exe
 	C:\Qt\Qt5.7.1\5.7\mingw53_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/win32-g++ -IF:/Project/GitHub/Clone/CorCPP/ChatRoom/ChatClient -IC:/Qt/Qt5.7.1/5.7/mingw53_32/include -IC:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui -IC:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtSql -IC:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtCore -I. -IC:/Qt/Qt5.7.1/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.7.1/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.7.1/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.7.1/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.7.1/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.7.1/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\headers\forms\LoginForm.h -o debug\moc_LoginForm.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all:
+compiler_uic_make_all: ui_loginform.h
 compiler_uic_clean:
+	-$(DEL_FILE) ui_loginform.h
+ui_loginform.h: ../../ui/loginform.ui \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/bin/uic.exe
+	C:\Qt\Qt5.7.1\5.7\mingw53_32\bin\uic.exe ..\..\ui\loginform.ui -o ui_loginform.h
+
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean 
+compiler_clean: compiler_moc_header_clean compiler_uic_clean 
 
 
 
@@ -474,9 +502,22 @@ debug/main.o: ../../main.cpp C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QApp
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qfiledialog.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QMessageBox \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qmessagebox.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QDesktopWidget \
 		../../headers/forms/LoginForm.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QMainWindow \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qmainwindow.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QLineEdit \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qlineedit.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextcursor.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextformat.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qpen.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextoption.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QLabel \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qlabel.h \
+		../../headers/ui/ui_loginform.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QAction \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qaction.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qactiongroup.h \
 		../../headers/tools/cJSON.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\..\main.cpp
 
@@ -581,9 +622,34 @@ debug/LoginForm.o: ../../sources/forms/LoginForm.cpp ../../headers/forms/LoginFo
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtouchdevice.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qicon.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QDialog \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QLineEdit \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qlineedit.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextcursor.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextformat.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qpen.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextoption.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QLabel \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qlabel.h \
+		../../headers/ui/ui_loginform.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QAction \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qaction.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qactiongroup.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QApplication \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qapplication.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtCore/qcoreapplication.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtCore/qeventloop.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qdesktopwidget.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qguiapplication.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qinputmethod.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QMessageBox \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qmessagebox.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qdialog.h
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtUiTools/QUiLoader \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtUiTools/quiloader.h \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtCore/QObject \
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtCore/QScopedPointer
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\LoginForm.o ..\..\sources\forms\LoginForm.cpp
 
 debug/User.o: ../../sources/models/User.cpp ../../headers/models/User.h

@@ -26,7 +26,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 HEADERS  += \
     headers/forms/LoginForm.h\
     headers/models/User.h\
-    headers/tools/cJSON.h
+    headers/tools/cJSON.h\
+    headers/ui/ui_loginform.h
 
 SOURCES +=  main.cpp\
     sources/forms/LoginForm.cpp\
@@ -42,4 +43,6 @@ CONFIG +=C++11
 QT+=sql
 
 QT += core
+
+FORMS += ui/loginform.ui
 

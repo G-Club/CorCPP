@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include "headers/tools/dbservice.h"
 #include <iostream>
+#include "headers/tools/cJSON.h"
 
 int main(int argc, char *argv[])
 {
