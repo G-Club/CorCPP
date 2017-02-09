@@ -37,3 +37,49 @@ HEADERS  += headers/forms/loginform.h\
 
 
 FORMS    += ui/loginform.ui
+
+
+UI_DIR = headers/ui
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

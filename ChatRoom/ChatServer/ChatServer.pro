@@ -30,9 +30,79 @@ sources/forms/mainwindow.cpp\
 
 
 
-HEADERS  += headers/forms/mainwindow.h\
-    headers/model/User.h\
-    headers/tools/cJSON.h\
-    headers/ui/ui_mainwindow.h
+HEADERS  +=  headers/forms/mainwindow.h\
+      headers/model/User.h\
+      headers/tools/cJSON.h\
+      headers/ui/ui_mainwindow.h
 
 FORMS    += ui/mainwindow.ui
+
+
+UI_DIR= ui
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
