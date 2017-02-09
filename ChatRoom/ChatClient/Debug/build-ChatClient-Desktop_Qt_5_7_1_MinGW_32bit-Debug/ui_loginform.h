@@ -19,7 +19,6 @@
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
-#include <QDesktopWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -35,12 +34,20 @@ public:
     {
         if (LoginForm->objectName().isEmpty())
             LoginForm->setObjectName(QStringLiteral("LoginForm"));
+        LoginForm->resize(400, 300);
+        menuBar = new QMenuBar(LoginForm);
+        menuBar->setObjectName(QStringLiteral("menuBar"));
+        LoginForm->setMenuBar(menuBar);
+        mainToolBar = new QToolBar(LoginForm);
+        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
+        LoginForm->addToolBar(mainToolBar);
+        centralWidget = new QWidget(LoginForm);
+        centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        LoginForm->setCentralWidget(centralWidget);
+        statusBar = new QStatusBar(LoginForm);
+        statusBar->setObjectName(QStringLiteral("statusBar"));
+        LoginForm->setStatusBar(statusBar);
 
-           LoginForm->resize(375,280);
-       QDesktopWidget* p_dw =QApplication::desktop();
-       int dw =p_dw->width();
-       int dh = p_dw->height();
-        LoginForm->move((dw-LoginForm->width())/2,(dh-LoginForm->height())/2);
         retranslateUi(LoginForm);
 
         QMetaObject::connectSlotsByName(LoginForm);

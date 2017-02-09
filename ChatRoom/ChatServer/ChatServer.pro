@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-02-07T08:40:07
+# Project created by QtCreator 2017-02-09T10:13:59
 #
 #-------------------------------------------------
 
@@ -23,13 +23,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-HEADERS  +=  headers/forms/mainwindow.h\
-    headers/model/User.h\
-    headers/tools/cJSON.h
-
-SOURCES +=  main.cpp\
-    sources/forms/mainwindow.cpp\
+SOURCES += main.cpp\
+sources/forms/mainwindow.cpp\
     sources/model/User.cpp\
     sources/tools/cJSON.c
-QT+=sql
-QT+=core
+
+
+
+HEADERS  += headers/forms/mainwindow.h\
+    headers/model/User.h\
+    headers/tools/cJSON.h\
+    headers/ui/ui_mainwindow.h
+
+FORMS    += ui/mainwindow.ui

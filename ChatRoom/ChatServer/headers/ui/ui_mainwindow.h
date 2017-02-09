@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'loginform.ui'
+** Form generated from reading UI file 'mainwindow.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_LOGINFORM_H
-#define UI_LOGINFORM_H
+#ifndef UI_MAINWINDOW_H
+#define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
@@ -23,7 +23,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_LoginForm
+class Ui_MainWindow
 {
 public:
     QMenuBar *menuBar;
@@ -31,32 +31,33 @@ public:
     QWidget *centralWidget;
     QStatusBar *statusBar;
 
-    void setupUi(QMainWindow *LoginForm)
+    void setupUi(QMainWindow *MainWindow)
     {
-        if (LoginForm->objectName().isEmpty())
-            LoginForm->setObjectName(QStringLiteral("LoginForm"));
+        if (MainWindow->objectName().isEmpty())
+            MainWindow->setObjectName(QStringLiteral("MainWindow"));
 
-           LoginForm->resize(375,280);
-       QDesktopWidget* p_dw =QApplication::desktop();
-       int dw =p_dw->width();
-       int dh = p_dw->height();
-        LoginForm->move((dw-LoginForm->width())/2,(dh-LoginForm->height())/2);
-        retranslateUi(LoginForm);
+        QDesktopWidget* p_dw =QApplication::desktop();
+        MainWindow->resize(500,420);
+        int dw =p_dw->width();
+        int dh = p_dw->height();
+         MainWindow->move((dw-MainWindow->width())/2,(dh-MainWindow->height())/2);
 
-        QMetaObject::connectSlotsByName(LoginForm);
+          retranslateUi(MainWindow);
+
+        QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
 
-    void retranslateUi(QMainWindow *LoginForm)
+    void retranslateUi(QMainWindow *MainWindow)
     {
-        LoginForm->setWindowTitle(QApplication::translate("LoginForm", "LoginForm", Q_NULLPTR));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class LoginForm: public Ui_LoginForm {};
+    class MainWindow: public Ui_MainWindow {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_LOGINFORM_H
+#endif // UI_MAINWINDOW_H

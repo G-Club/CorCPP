@@ -1,16 +1,16 @@
 <ui version="4.0">
- <class>LoginForm</class>
- <widget class="QMainWindow" name="LoginForm" >
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>620</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>LoginForm</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QMenuBar" name="menuBar" />
   <widget class="QToolBar" name="mainToolBar" />

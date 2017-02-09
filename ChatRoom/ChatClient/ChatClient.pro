@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-02-07T08:31:45
+# Project created by QtCreator 2017-02-09T09:43:08
 #
 #-------------------------------------------------
 
@@ -23,26 +23,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-HEADERS  += \
-    headers/forms/LoginForm.h\
-    headers/models/User.h\
-    headers/tools/cJSON.h\
-    headers/ui/ui_loginform.h
-
-SOURCES +=  main.cpp\
-    sources/forms/LoginForm.cpp\
+SOURCES += main.cpp\
+    sources/forms/loginform.cpp\
     sources/models/User.cpp\
     sources/tools/cJSON.c
 
 
+HEADERS  += headers/forms/loginform.h\
+    headers/models/User.h\
+    headers/tools/cJSON.h\
+    headers/ui/ui_loginform.h
 
 
 
-CONFIG +=C++11
-
-QT+=sql
-
-QT += core
-
-FORMS += ui/loginform.ui
-
+FORMS    += ui/loginform.ui
