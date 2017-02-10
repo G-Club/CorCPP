@@ -17,24 +17,20 @@
 #include <QtWidgets/QWidget>
 #include <QDesktopWidget>
 
+namespace Ui {
+class ULoginForm;
+} // namespace Ui
 
 class LoginForm : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    QWidget *centralWidget;
-    QPushButton *btn_login;
-    QLineEdit *txt_account;
-    QLineEdit *txt_pwd;
-    QLabel *label;
-    QLabel *label_2;
-
     explicit LoginForm(QWidget *parent = 0);
     ~LoginForm();
 
 private:
-
+ Ui::ULoginForm *ui;
 private slots:
     void Login();
 };
