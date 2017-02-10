@@ -30,55 +30,17 @@ QT_BEGIN_NAMESPACE
 class Ui_LoginForm
 {
 public:
-
+/*
     QWidget *centralWidget;
     QPushButton *btn_login;
     QLineEdit *txt_account;
     QLineEdit *txt_pwd;
     QLabel *label;
     QLabel *label_2;
-
+*/
     void setupUi(QMainWindow *LoginForm)
     {
-        if (LoginForm->objectName().isEmpty())
-        {
-            LoginForm->setObjectName(QStringLiteral("LoginForm"));
-        }
 
-
-        centralWidget = new QWidget(LoginForm);
-        centralWidget->setObjectName(QStringLiteral("centralWidget"));
-
-        btn_login = new QPushButton(centralWidget);
-        btn_login->setText(QString("登录"));
-        btn_login->setObjectName(QStringLiteral("btn_login"));
-        btn_login->setGeometry(QRect(260, 180, 75, 23));
-        btn_login->setFocusPolicy(Qt::NoFocus);
-        txt_account = new QLineEdit(centralWidget);
-        txt_account->setObjectName(QStringLiteral("lineEdit"));
-        txt_account->setGeometry(QRect(130, 60, 221, 31));
-
-        txt_pwd = new QLineEdit(centralWidget);
-        txt_pwd->setObjectName(QStringLiteral("lineEdit_2"));
-        txt_pwd->setGeometry(QRect(130, 110, 221, 31));
-        txt_pwd->setMaxLength(16);
-        txt_pwd->setEchoMode(QLineEdit::Password);
-        label = new QLabel(centralWidget);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(80, 70, 36, 16));
-        label->setText(QString("账号:"));
-        QFont font;
-        font.setFamily(QStringLiteral("Aharoni"));
-        font.setPointSize(12);
-        font.setBold(true);
-        font.setWeight(75);
-        label->setFont(font);
-        label_2 = new QLabel(centralWidget);
-        label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(80, 120, 36, 16));
-        label_2->setFont(font);
-        label_2->setText(QString("密码:"));
-        LoginForm->setCentralWidget(centralWidget);
 
         retranslateUi(LoginForm);
 
@@ -93,7 +55,7 @@ public:
 };
 
 namespace Ui {
-class LoginForm: public Ui_LoginForm {};
+class ULoginForm: public Ui_LoginForm {};
 } // namespace Ui
 
 QT_END_NAMESPACE

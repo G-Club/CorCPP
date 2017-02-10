@@ -6,8 +6,8 @@
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_MAINWINDOW_H
-#define UI_MAINWINDOW_H
+#ifndef UI_UMAINWINDOW_H
+#define UI_UMAINWINDOW_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
@@ -28,11 +28,11 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+
     QWidget *centralWidget;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     QTextEdit *textEdit;
-
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -41,7 +41,8 @@ public:
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         }
 
-        centralWidget = new QWidget(MainWindow);
+        centralWidget = new QWidget();
+        centralWidget->setParent(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
@@ -52,6 +53,13 @@ public:
         textEdit = new QTextEdit(centralWidget);
         textEdit->setObjectName(QStringLiteral("textEdit"));
         textEdit->setGeometry(QRect(80, 40, 421, 221));
+
+
+        QDesktopWidget* p_dw =QApplication::desktop();
+        MainWindow->resize(500,420);
+        int dw =p_dw->width();
+        int dh = p_dw->height();
+        MainWindow->move((dw-MainWindow->width())/2,(dh-MainWindow->height())/2);
 
         retranslateUi(MainWindow);
 
@@ -66,7 +74,7 @@ public:
 };
 
 namespace Ui {
-class MainWindow: public Ui_MainWindow {};
+class UMainWindow: public Ui_MainWindow {};
 } // namespace Ui
 
 QT_END_NAMESPACE
