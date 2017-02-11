@@ -23,6 +23,7 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 #include <QDesktopWidget>
+#include <QApplication>
 
 
 QT_BEGIN_NAMESPACE
@@ -53,15 +54,19 @@ public:
         btn_login->setObjectName(QStringLiteral("btn_login"));
         btn_login->setGeometry(QRect(260, 180, 75, 23));
         btn_login->setFocusPolicy(Qt::NoFocus);
+
         txt_account = new QLineEdit(centralWidget);
         txt_account->setObjectName(QStringLiteral("lineEdit"));
         txt_account->setGeometry(QRect(130, 60, 221, 31));
+        txt_account->setPlaceholderText(QStringLiteral("input your account "));
 
         txt_pwd = new QLineEdit(centralWidget);
         txt_pwd->setObjectName(QStringLiteral("lineEdit_2"));
         txt_pwd->setGeometry(QRect(130, 110, 221, 31));
         txt_pwd->setMaxLength(16);
         txt_pwd->setEchoMode(QLineEdit::Password);
+        txt_pwd->setPlaceholderText(QStringLiteral("input your password"));
+
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(80, 70, 36, 16));
@@ -79,8 +84,8 @@ public:
         label_2->setText(QString("密码:"));
         LoginForm->setCentralWidget(centralWidget);
 
-       // LoginForm->setWindowFlags(windowFlags()&~Qt::WindowMaximizeButtonHint);
-        LoginForm->resize(375,280);
+        LoginForm->setWindowFlags(LoginForm->windowFlags()&~Qt::WindowMaximizeButtonHint);
+        LoginForm->resize(455,280);
         QDesktopWidget* p_dw =QApplication::desktop();
         int dw =p_dw->width();
         int dh = p_dw->height();

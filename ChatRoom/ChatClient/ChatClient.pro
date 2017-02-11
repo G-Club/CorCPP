@@ -41,7 +41,7 @@ FORMS    += ui/loginform.ui
 
 UI_DIR = headers/ui
 
-
+QT += core gui network
 
 
 
