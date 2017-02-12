@@ -33,6 +33,8 @@ private:
  Ui::ULoginForm *ui;
 private slots:
     void Login();
+    void connError();
+    void connSucc();
 };
 
 #endif // LOGINFORM_H

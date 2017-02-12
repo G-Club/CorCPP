@@ -40,7 +40,7 @@ FORMS    += ui/mainwindow.ui
 
 UI_DIR= ui
 
-
+QT += network
 
 
 

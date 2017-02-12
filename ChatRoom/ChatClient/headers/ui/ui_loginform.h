@@ -59,6 +59,7 @@ public:
         txt_account->setObjectName(QStringLiteral("lineEdit"));
         txt_account->setGeometry(QRect(130, 60, 221, 31));
         txt_account->setPlaceholderText(QStringLiteral("input your account "));
+        txt_account->setText(QApplication::tr("10005"));
 
         txt_pwd = new QLineEdit(centralWidget);
         txt_pwd->setObjectName(QStringLiteral("lineEdit_2"));
@@ -66,6 +67,7 @@ public:
         txt_pwd->setMaxLength(16);
         txt_pwd->setEchoMode(QLineEdit::Password);
         txt_pwd->setPlaceholderText(QStringLiteral("input your password"));
+        txt_pwd->setText(QApplication::tr("123456"));
 
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));

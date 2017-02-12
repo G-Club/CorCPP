@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -41,7 +41,8 @@ FORMS    += ui/loginform.ui
 
 UI_DIR = headers/ui
 
-QT += core gui network
+QT += core gui
+QT += network
 
 
 
