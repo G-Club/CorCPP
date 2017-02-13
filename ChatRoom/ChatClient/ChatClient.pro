@@ -26,22 +26,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
     sources/forms/loginform.cpp\
     sources/models/User.cpp\
-    sources/tools/cJSON.c
+    sources/tools/cJSON.c \
+    ui/mainform.cpp
 
 
 HEADERS  += headers/forms/loginform.h\
     headers/models/User.h\
     headers/tools/cJSON.h\
-    headers/ui/ui_loginform.h
+    headers/ui/ui_loginform.h \
+    ui/mainform.h
 
 
 
-FORMS    += ui/loginform.ui
+FORMS    += ui/loginform.ui \
+    ui/mainform.ui
 
 
-UI_DIR = headers/ui
+UI_DIR = ../../headers/ui
 
-QT += core gui
 QT += network
 
 

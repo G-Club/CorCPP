@@ -6,8 +6,8 @@
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_UMAINWINDOW_H
-#define UI_UMAINWINDOW_H
+#ifndef UI_MAINWINDOW_H
+#define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
@@ -19,47 +19,44 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextEdit>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
-#include <QDesktopWidget>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_MainWindow
 {
 public:
-
-    QWidget *centralWidget;
+    QWidget *centralwidget;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     QTextEdit *textEdit;
+    QMenuBar *menubar;
+    QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
-        {
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        }
-
-        centralWidget = new QWidget();
-        centralWidget->setParent(MainWindow);
-        centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        pushButton = new QPushButton(centralWidget);
+        MainWindow->resize(708, 495);
+        centralwidget = new QWidget(MainWindow);
+        centralwidget->setObjectName(QStringLiteral("centralwidget"));
+        pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(100, 280, 75, 23));
-        pushButton_2 = new QPushButton(centralWidget);
+        pushButton->setGeometry(QRect(560, 50, 75, 23));
+        pushButton_2 = new QPushButton(centralwidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(400, 280, 75, 23));
-        textEdit = new QTextEdit(centralWidget);
+        pushButton_2->setGeometry(QRect(560, 150, 75, 23));
+        textEdit = new QTextEdit(centralwidget);
         textEdit->setObjectName(QStringLiteral("textEdit"));
-        textEdit->setGeometry(QRect(80, 40, 421, 221));
-
-
-        QDesktopWidget* p_dw =QApplication::desktop();
-        MainWindow->resize(500,420);
-        int dw =p_dw->width();
-        int dh = p_dw->height();
-        MainWindow->move((dw-MainWindow->width())/2,(dh-MainWindow->height())/2);
+        textEdit->setGeometry(QRect(20, 10, 401, 271));
+        MainWindow->setCentralWidget(centralwidget);
+        menubar = new QMenuBar(MainWindow);
+        menubar->setObjectName(QStringLiteral("menubar"));
+        menubar->setGeometry(QRect(0, 0, 708, 23));
+        MainWindow->setMenuBar(menubar);
+        statusbar = new QStatusBar(MainWindow);
+        statusbar->setObjectName(QStringLiteral("statusbar"));
+        MainWindow->setStatusBar(statusbar);
 
         retranslateUi(MainWindow);
 
@@ -69,12 +66,14 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("MainWindow", "PushButton", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("MainWindow", "PushButton", Q_NULLPTR));
     } // retranslateUi
 
 };
 
 namespace Ui {
-class UMainWindow: public Ui_MainWindow {};
+    class MainWindow: public Ui_MainWindow {};
 } // namespace Ui
 
 QT_END_NAMESPACE

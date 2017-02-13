@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT    += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,21 +24,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-sources/forms/mainwindow.cpp\
     sources/model/User.cpp\
-    sources/tools/cJSON.c
+    sources/forms/mainwindow.cpp\
+    sources/tools/cJSON.c \
+    ui/mainwindow.cpp
 
 
 
-HEADERS  +=  headers/forms/mainwindow.h\
-      headers/model/User.h\
+HEADERS  +=  headers/model/User.h\
       headers/tools/cJSON.h \
-    headers/ui/ui_mainwindow.h
+      headers/forms/mainwindow.h\
+      headers/ui/ui_mainwindow.h
 
 FORMS    += ui/mainwindow.ui
 
 
-UI_DIR= ui
+UI_DIR=  ../../headers/ui
 
 QT += network
 
