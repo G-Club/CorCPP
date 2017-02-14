@@ -47,7 +47,7 @@ public:
 };
 
 namespace Ui {
-    class MainForm: public Ui_MainForm {};
+    class UMainForm: public Ui_MainForm {};
 } // namespace Ui
 
 QT_END_NAMESPACE

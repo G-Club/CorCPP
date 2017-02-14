@@ -4,7 +4,7 @@
 #include <QWidget>
 
 namespace Ui {
-class MainForm;
+class UMainForm;
 }
 
 class MainForm : public QWidget
@@ -16,7 +16,7 @@ public:
     ~MainForm();
 
 private:
-    Ui::MainForm *ui;
+    Ui::UMainForm *ui;
 };
 
 #endif // MAINFORM_H

@@ -27,19 +27,20 @@ SOURCES += main.cpp\
     sources/forms/loginform.cpp\
     sources/models/User.cpp\
     sources/tools/cJSON.c \
-    ui/mainform.cpp
+    sources/forms/mainform.cpp
 
 
 HEADERS  += headers/forms/loginform.h\
     headers/models/User.h\
     headers/tools/cJSON.h\
     headers/ui/ui_loginform.h \
-    ui/mainform.h
+   headers/ui/ui_mainform.h \
+   headers/forms/mainform.h
 
 
 
 FORMS    += ui/loginform.ui \
-    ui/mainform.ui
+            ui/mainform.ui
 
 
 UI_DIR = ../../headers/ui

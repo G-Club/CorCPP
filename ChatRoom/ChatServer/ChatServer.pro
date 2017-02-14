@@ -26,8 +26,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
     sources/model/User.cpp\
     sources/forms/mainwindow.cpp\
-    sources/tools/cJSON.c \
-    ui/mainwindow.cpp
+    sources/tools/cJSON.c
+
 
 
 

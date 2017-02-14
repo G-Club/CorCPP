@@ -9,8 +9,7 @@
 #include <QtNetwork/QHostAddress>
 #include <QtNetwork/QtNetwork>
 #include "headers/forms/loginform.h"
-#include "headers/ui/ui_loginform.h"
-#include "headers/ui/ui_mainform.h"
+#include "headers/forms/mainform.h"
 #include "headers/tools/cJSON.h"
 
 
@@ -19,7 +18,8 @@ LoginForm::LoginForm(QWidget *parent) :QMainWindow(parent),ui(new Ui::ULoginForm
 {
     QString name=this->objectName();
     ui->setupUi(this);
-    connect(ui->btn_login,SIGNAL(clicked()),this,SLOT(Login()));
+
+   // connect(ui->btn_login,SIGNAL(clicked()),this,SLOT(Login()));
 }
 
 LoginForm::~LoginForm()
@@ -30,8 +30,10 @@ LoginForm::~LoginForm()
 
 void LoginForm::Login()
 {
-    QString account = ui->txt_account->text();//账号
-    QString pwd = ui->txt_pwd->text();//密码
+
+    QString account = ui->txt_account->text().trimmed();//账号
+    QString pwd = ui->txt_pwd->text().trimmed();//密码
+
     if(account.isEmpty()|| pwd.isEmpty())
     {
         QMessageBox::information(0,QString("提示"),QString("账号密码输入全"));
@@ -42,8 +44,8 @@ void LoginForm::Login()
     time_t timer;//从1970年到现在经过了多少秒
     time(&timer);//
     /*
-struct tm
-{
+  struct tm
+   {
     int tm_sec; //秒，正常范围0-59， 但允许至61
     int tm_min;  //分钟，0-59
     int tm_hour; //小时， 0-23
@@ -53,7 +55,7 @@ struct tm
     int tm_wday; //星期，一周中的第几天， 从星期日算起，0-6
     int tm_yday; //从今年1月1日到目前的天数，范围0-365
     int tm_isdst; //日光节约时间的旗标
-};
+    };
 */
     struct tm* localtm ;
     localtm  =localtime(&timer);
@@ -62,17 +64,18 @@ struct tm
 
     QTcpSocket *client = new QTcpSocket(this);
 
-   // client->connectToHost(QHostAddress("127.0.0.1"),6123);
+     client->connectToHost(QHostAddress("127.0.0.1"),6123);
     /*
 socket打開后首先進入  查找主機狀態，查找到了，會有hostFound（）信號發出。你可以把這個信號綁定一個槽，
 在槽裏改變一個bool變量以標記是否查找到主機了。查找到了主機后，socket進入正在連接狀態，連接建立后，會有connected（）信號發出。
 你可以把這個信號綁定一個槽，在槽裏改變一個bool變量以標記是否連接成功到主機了。之後，socket進入已連接狀態。
 */
- //   connect(client,SIGNAL(hostFound()),this,SLOT(connError()));
-   // connect(client,SIGNAL(connected()),this,SLOT(connSucc()));
+    connect(client,SIGNAL(hostFound()),this,SLOT(connError()));
+    connect(client,SIGNAL(connected()),this,SLOT(connSucc()));
 
 
             int a=0;
+
 }
 
 void LoginForm::connSucc()

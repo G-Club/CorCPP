@@ -23,57 +23,62 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_MainWindow
+class Ui_UMainWindow
 {
 public:
     QWidget *centralwidget;
-    QPushButton *pushButton;
-    QPushButton *pushButton_2;
-    QTextEdit *textEdit;
+    QPushButton *txt_start;
+    QPushButton *btn_close;
+    QTextEdit *txt_info;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
-    void setupUi(QMainWindow *MainWindow)
+    void setupUi(QMainWindow *UMainWindow)
     {
-        if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(708, 495);
-        centralwidget = new QWidget(MainWindow);
+        if (UMainWindow->objectName().isEmpty())
+            UMainWindow->setObjectName(QStringLiteral("UMainWindow"));
+
+
+
+        UMainWindow->resize(602, 400);
+        centralwidget = new QWidget(UMainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(560, 50, 75, 23));
-        pushButton_2 = new QPushButton(centralwidget);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(560, 150, 75, 23));
-        textEdit = new QTextEdit(centralwidget);
-        textEdit->setObjectName(QStringLiteral("textEdit"));
-        textEdit->setGeometry(QRect(20, 10, 401, 271));
-        MainWindow->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(MainWindow);
+        txt_start = new QPushButton(centralwidget);
+        txt_start->setObjectName(QStringLiteral("txt_start"));
+        txt_start->setGeometry(QRect(460, 30, 75, 23));
+        btn_close = new QPushButton(centralwidget);
+        btn_close->setObjectName(QStringLiteral("btn_close"));
+        btn_close->setGeometry(QRect(460, 130, 75, 23));
+        txt_info = new QTextEdit(centralwidget);
+        txt_info->setObjectName(QStringLiteral("txt_info"));
+        txt_info->setGeometry(QRect(20, 10, 401, 271));
+        txt_info->setReadOnly(true);
+        UMainWindow->setCentralWidget(centralwidget);
+        menubar = new QMenuBar(UMainWindow);
         menubar->setObjectName(QStringLiteral("menubar"));
-        menubar->setGeometry(QRect(0, 0, 708, 23));
-        MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
+        menubar->setGeometry(QRect(0, 0, 602, 23));
+        UMainWindow->setMenuBar(menubar);
+        statusbar = new QStatusBar(UMainWindow);
         statusbar->setObjectName(QStringLiteral("statusbar"));
-        MainWindow->setStatusBar(statusbar);
+        UMainWindow->setStatusBar(statusbar);
 
-        retranslateUi(MainWindow);
+        retranslateUi(UMainWindow);
 
-        QMetaObject::connectSlotsByName(MainWindow);
+        QMetaObject::connectSlotsByName(UMainWindow);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindow)
+    void retranslateUi(QMainWindow *UMainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
-        pushButton->setText(QApplication::translate("MainWindow", "PushButton", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("MainWindow", "PushButton", Q_NULLPTR));
+        UMainWindow->setWindowTitle(QApplication::translate("UMainWindow", "MainWindow", Q_NULLPTR));
+        txt_start->setText(QApplication::translate("UMainWindow", "\345\274\200\345\247\213", Q_NULLPTR));
+        btn_close->setText(QApplication::translate("UMainWindow", "\345\205\263\351\227\255", Q_NULLPTR));
+        txt_info->setPlaceholderText(QApplication::translate("UMainWindow", "some info", Q_NULLPTR));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+    class UMainWindow: public Ui_UMainWindow {};
 } // namespace Ui
 
 QT_END_NAMESPACE

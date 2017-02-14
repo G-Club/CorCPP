@@ -36,7 +36,7 @@ public:
     {
         if (ULoginForm->objectName().isEmpty())
             ULoginForm->setObjectName(QStringLiteral("ULoginForm"));
-        ULoginForm->resize(400, 250);
+        ULoginForm->resize(395, 256);
         centralWidget = new QWidget(ULoginForm);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         btn_login = new QPushButton(centralWidget);
@@ -75,7 +75,7 @@ public:
     {
         ULoginForm->setWindowTitle(QApplication::translate("ULoginForm", "Login", Q_NULLPTR));
         btn_login->setText(QApplication::translate("ULoginForm", "Login", Q_NULLPTR));
-        txt_account->setText(QApplication::translate("ULoginForm", "10003", Q_NULLPTR));
+        txt_account->setText(QApplication::translate("ULoginForm", "10004", Q_NULLPTR));
         txt_account->setPlaceholderText(QApplication::translate("ULoginForm", "input your account", Q_NULLPTR));
         txt_pwd->setText(QApplication::translate("ULoginForm", "123456", Q_NULLPTR));
         txt_pwd->setPlaceholderText(QApplication::translate("ULoginForm", "input password", Q_NULLPTR));

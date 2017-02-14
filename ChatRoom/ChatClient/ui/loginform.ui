@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LoginForm</class>
- <widget class="QMainWindow" name="LoginForm">
+ <class>ULoginForm</class>
+ <widget class="QMainWindow" name="ULoginForm">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>250</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="btn_login">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>240</x>
       <y>180</y>
       <width>75</width>
       <height>23</height>
@@ -30,24 +30,33 @@
      <string>Login</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="txt_account">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>110</x>
       <y>60</y>
       <width>221</width>
       <height>31</height>
      </rect>
     </property>
+    <property name="text">
+     <string>10003</string>
+    </property>
+    <property name="placeholderText">
+     <string>input your account</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="txt_pwd">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>110</x>
       <y>110</y>
       <width>221</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>123456</string>
     </property>
     <property name="maxLength">
      <number>16</number>
@@ -59,10 +68,10 @@
      <string>input password</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="lab_account">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>40</x>
       <y>60</y>
       <width>81</width>
       <height>31</height>
@@ -80,10 +89,10 @@
      <string>account:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="lab_pwd">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>30</x>
       <y>110</y>
       <width>81</width>
       <height>41</height>
@@ -102,25 +111,6 @@
     </property>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>400</width>
-     <height>23</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
-  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
