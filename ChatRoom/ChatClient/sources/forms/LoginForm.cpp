@@ -18,8 +18,7 @@ LoginForm::LoginForm(QWidget *parent) :QMainWindow(parent),ui(new Ui::ULoginForm
 {
     QString name=this->objectName();
     ui->setupUi(this);
-
-   // connect(ui->btn_login,SIGNAL(clicked()),this,SLOT(Login()));
+    connect(ui->btn_login,SIGNAL(clicked(bool)),this,SLOT(on_btn_login_clicked(bool)));
 }
 
 LoginForm::~LoginForm()
@@ -27,10 +26,8 @@ LoginForm::~LoginForm()
     QMessageBox::about(this,tr("xigou"),tr("xigou end"));
     exit(1);
 }
-
-void LoginForm::Login()
+void LoginForm::on_btn_login_clicked(bool checked)
 {
-
     QString account = ui->txt_account->text().trimmed();//账号
     QString pwd = ui->txt_pwd->text().trimmed();//密码
 
@@ -62,19 +59,24 @@ void LoginForm::Login()
 
     sendstr+="\"timestamp\":\""+QString::number(timer,10)+"\"}";
 
-    QTcpSocket *client = new QTcpSocket(this);
-
-     client->connectToHost(QHostAddress("127.0.0.1"),6123);
     /*
 socket打開后首先進入  查找主機狀態，查找到了，會有hostFound（）信號發出。你可以把這個信號綁定一個槽，
 在槽裏改變一個bool變量以標記是否查找到主機了。查找到了主機后，socket進入正在連接狀態，連接建立后，會有connected（）信號發出。
 你可以把這個信號綁定一個槽，在槽裏改變一個bool變量以標記是否連接成功到主機了。之後，socket進入已連接狀態。
 */
-    connect(client,SIGNAL(hostFound()),this,SLOT(connError()));
-    connect(client,SIGNAL(connected()),this,SLOT(connSucc()));
+    QTcpSocket *client = new QTcpSocket(this);
 
+     client->connectToHost(QHostAddress("127.0.0.1"),6123);
+
+     connect(client,SIGNAL(hostFound()),this,SLOT(connError()));
+     connect(client,SIGNAL(connected()),this,SLOT(connSucc()));
 
             int a=0;
+
+}
+void LoginForm::on_btn_login_toggled(bool checked)
+{
+
 
 }
 

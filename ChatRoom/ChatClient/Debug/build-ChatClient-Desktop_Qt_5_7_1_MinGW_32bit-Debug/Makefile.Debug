@@ -211,6 +211,7 @@ debug/moc_loginform.cpp: C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QMainWin
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtouchdevice.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qicon.h \
+		../../headers/ui/ui_loginform.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtCore/QVariant \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QAction \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qaction.h \
@@ -249,18 +250,10 @@ debug/moc_loginform.cpp: C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QMainWin
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextformat.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qpen.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextoption.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QMenuBar \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qmenubar.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qmenu.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QPushButton \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qpushbutton.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QStatusBar \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qstatusbar.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QToolBar \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qtoolbar.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QWidget \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QDesktopWidget \
 		../../headers/forms/loginform.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/bin/moc.exe
 	C:\Qt\Qt5.7.1\5.7\mingw53_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Qt5.7.1/5.7/mingw53_32/mkspecs/win32-g++ -IF:/Project/GitHub/Clone/CorCPP/ChatRoom/ChatClient -IC:/Qt/Qt5.7.1/5.7/mingw53_32/include -IC:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui -IC:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtCore -I. -IC:/Qt/Qt5.7.1/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.7.1/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.7.1/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.7.1/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.7.1/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.7.1/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\..\headers\forms\loginform.h -o debug\moc_loginform.cpp
@@ -492,6 +485,7 @@ debug/main.o: ../../main.cpp ../../headers/forms/loginform.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtouchdevice.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qicon.h \
+		../../headers/ui/ui_loginform.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtCore/QVariant \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QAction \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qaction.h \
@@ -530,18 +524,10 @@ debug/main.o: ../../main.cpp ../../headers/forms/loginform.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextformat.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qpen.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextoption.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QMenuBar \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qmenubar.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qmenu.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QPushButton \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qpushbutton.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QStatusBar \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qstatusbar.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QToolBar \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qtoolbar.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QWidget \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QDesktopWidget
+		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\..\main.cpp
 
 debug/loginform.o: ../../sources/forms/loginform.cpp C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QMessageBox \
@@ -810,6 +796,7 @@ debug/loginform.o: ../../sources/forms/loginform.cpp C:/Qt/Qt5.7.1/5.7/mingw53_3
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qmainwindow.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qicon.h \
+		../../headers/ui/ui_loginform.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QAction \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qaction.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qactiongroup.h \
@@ -842,18 +829,11 @@ debug/loginform.o: ../../sources/forms/loginform.cpp C:/Qt/Qt5.7.1/5.7/mingw53_3
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextformat.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qpen.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtGui/qtextoption.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QMenuBar \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qmenubar.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qmenu.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QPushButton \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qpushbutton.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QStatusBar \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qstatusbar.h \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QToolBar \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/qtoolbar.h \
 		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QWidget \
-		C:/Qt/Qt5.7.1/5.7/mingw53_32/include/QtWidgets/QDesktopWidget \
+		../../headers/forms/mainform.h \
 		../../headers/tools/cJSON.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\loginform.o ..\..\sources\forms\loginform.cpp
 

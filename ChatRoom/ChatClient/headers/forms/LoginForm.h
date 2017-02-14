@@ -19,9 +19,10 @@ public:
 private:
  Ui::ULoginForm *ui;
 private slots:
-    void Login();
     void connError();
     void connSucc();
+    void on_btn_login_toggled(bool checked);
+    void on_btn_login_clicked(bool checked);
 };
 
 #endif // LOGINFORM_H

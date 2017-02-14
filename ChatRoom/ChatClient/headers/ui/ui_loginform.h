@@ -73,7 +73,7 @@ public:
 
     void retranslateUi(QMainWindow *ULoginForm)
     {
-        ULoginForm->setWindowTitle(QApplication::translate("ULoginForm", "Login", Q_NULLPTR));
+        ULoginForm->setWindowTitle(QApplication::translate("ULoginForm", "\347\231\273\345\275\225", Q_NULLPTR));
         btn_login->setText(QApplication::translate("ULoginForm", "Login", Q_NULLPTR));
         txt_account->setText(QApplication::translate("ULoginForm", "10003", Q_NULLPTR));
         txt_account->setPlaceholderText(QApplication::translate("ULoginForm", "input your account", Q_NULLPTR));

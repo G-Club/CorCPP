@@ -27,7 +27,7 @@ class Ui_UMainWindow
 {
 public:
     QWidget *centralwidget;
-    QPushButton *txt_start;
+    QPushButton *btn_start;
     QPushButton *btn_close;
     QTextEdit *txt_info;
     QMenuBar *menubar;
@@ -37,15 +37,12 @@ public:
     {
         if (UMainWindow->objectName().isEmpty())
             UMainWindow->setObjectName(QStringLiteral("UMainWindow"));
-
-
-
         UMainWindow->resize(602, 400);
         centralwidget = new QWidget(UMainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        txt_start = new QPushButton(centralwidget);
-        txt_start->setObjectName(QStringLiteral("txt_start"));
-        txt_start->setGeometry(QRect(460, 30, 75, 23));
+        btn_start = new QPushButton(centralwidget);
+        btn_start->setObjectName(QStringLiteral("btn_start"));
+        btn_start->setGeometry(QRect(460, 30, 75, 23));
         btn_close = new QPushButton(centralwidget);
         btn_close->setObjectName(QStringLiteral("btn_close"));
         btn_close->setGeometry(QRect(460, 130, 75, 23));
@@ -70,7 +67,7 @@ public:
     void retranslateUi(QMainWindow *UMainWindow)
     {
         UMainWindow->setWindowTitle(QApplication::translate("UMainWindow", "MainWindow", Q_NULLPTR));
-        txt_start->setText(QApplication::translate("UMainWindow", "\345\274\200\345\247\213", Q_NULLPTR));
+        btn_start->setText(QApplication::translate("UMainWindow", "\345\274\200\345\247\213", Q_NULLPTR));
         btn_close->setText(QApplication::translate("UMainWindow", "\345\205\263\351\227\255", Q_NULLPTR));
         txt_info->setPlaceholderText(QApplication::translate("UMainWindow", "some info", Q_NULLPTR));
     } // retranslateUi

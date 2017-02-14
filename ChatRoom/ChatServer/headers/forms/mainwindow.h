@@ -17,9 +17,11 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_txt_start_toggled(bool checked);
+    void on_btn_start_toggled(bool checked);
 
     void on_btn_close_toggled(bool checked);
+
+    void on_btn_start_clicked(bool checked);
 
 private:
     Ui::UMainWindow *ui;
