@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 4.2.0, 2017-02-14T17:15:09. -->
+=======
+<!-- Written by QtCreator 4.2.0, 2017-02-13T20:15:54. -->
+>>>>>>> origin/master
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{69a296d3-c3cb-4e89-950d-169ebc7484a2}</value>
+  <value type="QByteArray">{1bdc68f8-b5d0-4a38-89bb-0d5a17bf84ca}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -285,8 +289,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">ChatServer</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:F:/Project/GitHub/Clone/CorCPP/ChatRoom/ChatServer/ChatServer.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">ChatServer2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:F:/GitHub/Clone/CorCPP/ChatRoom/ChatServer/ChatServer.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">ChatServer.pro</value>
