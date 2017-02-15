@@ -61,8 +61,13 @@ void LoginForm::on_btn_login_clicked(bool checked)
 
     /*
 socket打開后首先進入  查找主機狀態，查找到了，會有hostFound（）信號發出。你可以把這個信號綁定一個槽，
-在槽裏改變一個bool變量以標記是否查找到主機了。查找到了主機后，socket進入正在連接狀態，連接建立后，會有connected（）信號發出。
-你可以把這個信號綁定一個槽，在槽裏改變一個bool變量以標記是否連接成功到主機了。之後，socket進入已連接狀態。
+在槽裏改變一個bool變量以標記是否查找到主機了。查找到了主機后，socket進入正在連接狀態，連接建立后，
+會有connected（）信號發出。你可以把這個信號綁定一個槽，在槽裏改變一個bool變量以標記是否連接成功到主機了。
+之後，socket進入已連接狀態。
+
+
+任何连接或者进行连接立即关闭并且QSocket进入HostLookup 状态查找功发射hostFound()始TCP连接
+并且进入Connecting状态连接功发射connected()并且进入Connected状态任何现错误发射error()
 */
     QTcpSocket *client = new QTcpSocket(this);
 
@@ -70,22 +75,29 @@ socket打開后首先進入  查找主機狀態，查找到了，會有hostFound
 
      connect(client,SIGNAL(hostFound()),this,SLOT(connError()));
      connect(client,SIGNAL(connected()),this,SLOT(connSucc()));
-
+    connect(client,SIGNAL(disconnected()),this,SLOT(onDisconnect()));
             int a=0;
 
 }
+
+
 void LoginForm::on_btn_login_toggled(bool checked)
 {
 
 
 }
 
-void LoginForm::connSucc()
+void LoginForm::ConnSucc()
 {
     QMessageBox::about(0,QApplication::tr("socket"),tr("connected success"));
 }
 
-void LoginForm::connError()
+void LoginForm::ConnError()
 {
     QMessageBox::about(0,QApplication::tr("socket"),tr("connected error"));
+}
+
+void LoginForm::onDisconnect()
+{
+ QMessageBox::about(0,QApplication::tr("socket"),tr("SOCKET Disconnect"));
 }
