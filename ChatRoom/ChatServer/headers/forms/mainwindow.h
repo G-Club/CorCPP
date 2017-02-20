@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtNetwork/QtNetwork>
 #include <headers/ui/ui_mainwindow.h>
+#include <headers/tools/tcpserver.h>
 
 namespace Ui {
 class UMainWindow;
@@ -21,11 +22,11 @@ private slots:
     void on_btn_start_toggled(bool checked);
     void on_btn_close_toggled(bool checked);
     void on_btn_start_clicked(bool checked);
-    void on_newconnect();
+    void on_newconnect(qintptr handle);
   //  void incomingConnection(int  socketDescriptor);
 private:
     Ui::UMainWindow *ui;
-    QTcpServer* server =new QTcpServer();
+    TcpServer* server =new TcpServer();
     QTcpSocket* clientConnection;
 
 };

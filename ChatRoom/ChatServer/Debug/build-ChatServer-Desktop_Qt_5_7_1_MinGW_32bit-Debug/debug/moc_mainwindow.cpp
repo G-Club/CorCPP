@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[7];
-    char stringdata0[97];
+    QByteArrayData data[9];
+    char stringdata0[112];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,12 +35,15 @@ QT_MOC_LITERAL(2, 32, 0), // ""
 QT_MOC_LITERAL(3, 33, 7), // "checked"
 QT_MOC_LITERAL(4, 41, 20), // "on_btn_close_toggled"
 QT_MOC_LITERAL(5, 62, 20), // "on_btn_start_clicked"
-QT_MOC_LITERAL(6, 83, 13) // "on_newconnect"
+QT_MOC_LITERAL(6, 83, 13), // "on_newconnect"
+QT_MOC_LITERAL(7, 97, 7), // "qintptr"
+QT_MOC_LITERAL(8, 105, 6) // "handle"
 
     },
     "MainWindow\0on_btn_start_toggled\0\0"
     "checked\0on_btn_close_toggled\0"
-    "on_btn_start_clicked\0on_newconnect"
+    "on_btn_start_clicked\0on_newconnect\0"
+    "qintptr\0handle"
 };
 #undef QT_MOC_LITERAL
 
@@ -61,13 +64,13 @@ static const uint qt_meta_data_MainWindow[] = {
        1,    1,   34,    2, 0x08 /* Private */,
        4,    1,   37,    2, 0x08 /* Private */,
        5,    1,   40,    2, 0x08 /* Private */,
-       6,    0,   43,    2, 0x08 /* Private */,
+       6,    1,   43,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Bool,    3,
     QMetaType::Void, QMetaType::Bool,    3,
     QMetaType::Void, QMetaType::Bool,    3,
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 7,    8,
 
        0        // eod
 };
@@ -81,7 +84,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->on_btn_start_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 1: _t->on_btn_close_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 2: _t->on_btn_start_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 3: _t->on_newconnect(); break;
+        case 3: _t->on_newconnect((*reinterpret_cast< qintptr(*)>(_a[1]))); break;
         default: ;
         }
     }

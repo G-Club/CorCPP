@@ -7,7 +7,6 @@
 #include <thread>
 #include <errno.h>
 #include <QtNetwork/QHostAddress>
-#include <QtNetwork/QtNetwork>
 #include "headers/forms/loginform.h"
 #include "headers/forms/mainform.h"
 #include "headers/tools/cJSON.h"
@@ -23,6 +22,13 @@ LoginForm::LoginForm(QWidget *parent) :QMainWindow(parent),ui(new Ui::ULoginForm
 
 LoginForm::~LoginForm()
 {
+    if(this->client != NULL)
+    {
+        if(this->client->isOpen())
+        {
+            this->client->close();
+        }
+    }
     QMessageBox::about(this,tr("xigou"),tr("xigou end"));
     exit(1);
 }
@@ -69,15 +75,13 @@ socket打開后首先進入  查找主機狀態，查找到了，會有hostFound
 任何连接或者进行连接立即关闭并且QSocket进入HostLookup 状态查找功发射hostFound()始TCP连接
 并且进入Connecting状态连接功发射connected()并且进入Connected状态任何现错误发射error()
 */
-    QTcpSocket *client = new QTcpSocket(this);
+   client = new QTcpSocket(this);
 
      client->connectToHost(QHostAddress("127.0.0.1"),6123);
 
      connect(client,SIGNAL(hostFound()),this,SLOT(connError()));
      connect(client,SIGNAL(connected()),this,SLOT(connSucc()));
     connect(client,SIGNAL(disconnected()),this,SLOT(onDisconnect()));
-            int a=0;
-
 }
 
 
@@ -86,17 +90,17 @@ void LoginForm::on_btn_login_toggled(bool checked)
 
 
 }
-
+//连接成功
 void LoginForm::ConnSucc()
 {
     QMessageBox::about(0,QApplication::tr("socket"),tr("connected success"));
 }
-
+//连接失败
 void LoginForm::ConnError()
 {
     QMessageBox::about(0,QApplication::tr("socket"),tr("connected error"));
 }
-
+//取消连接
 void LoginForm::onDisconnect()
 {
  QMessageBox::about(0,QApplication::tr("socket"),tr("SOCKET Disconnect"));
