@@ -6,10 +6,13 @@
 
 
 
-class TcpSocket : public QTcpSocket
+class TcpServer : public QTcpServer
 {
 public:
-    TcpSocket();
+    TcpServer();
+    void incomingConnection(qintptr handle);//有新链接时的方法
+private:
+   QTcpSocket tcpClientSocket;
 };
 
 #endif // TCPSOCKET_H

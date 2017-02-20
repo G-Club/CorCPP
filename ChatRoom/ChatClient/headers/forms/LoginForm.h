@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <headers/ui/ui_loginform.h>
+#include <QtNetwork/QtNetwork>
 
 namespace Ui {
 class ULoginForm;
@@ -18,6 +19,7 @@ public:
 
 private:
  Ui::ULoginForm *ui;
+  QTcpSocket *client;
 private slots:
     void ConnError();
     void ConnSucc();

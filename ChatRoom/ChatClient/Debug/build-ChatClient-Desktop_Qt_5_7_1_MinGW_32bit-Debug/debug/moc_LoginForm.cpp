@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_LoginForm_t {
     QByteArrayData data[8];
-    char stringdata0[94];
+    char stringdata0[93];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,12 +36,12 @@ QT_MOC_LITERAL(3, 21, 8), // "ConnSucc"
 QT_MOC_LITERAL(4, 30, 20), // "on_btn_login_toggled"
 QT_MOC_LITERAL(5, 51, 7), // "checked"
 QT_MOC_LITERAL(6, 59, 20), // "on_btn_login_clicked"
-QT_MOC_LITERAL(7, 80, 13) // "on_disconnect"
+QT_MOC_LITERAL(7, 80, 12) // "onDisconnect"
 
     },
     "LoginForm\0ConnError\0\0ConnSucc\0"
     "on_btn_login_toggled\0checked\0"
-    "on_btn_login_clicked\0on_disconnect"
+    "on_btn_login_clicked\0onDisconnect"
 };
 #undef QT_MOC_LITERAL
 
