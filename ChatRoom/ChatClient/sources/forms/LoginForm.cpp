@@ -81,7 +81,7 @@ socket打開后首先進入  查找主機狀態，查找到了，會有hostFound
 
      connect(client,SIGNAL(hostFound()),this,SLOT(connError()));
      connect(client,SIGNAL(connected()),this,SLOT(connSucc()));
-    connect(client,SIGNAL(disconnected()),this,SLOT(onDisconnect()));
+   // connect(client,SIGNAL(disconnected()),this,SLOT(onDisconnect()));
 }
 
 

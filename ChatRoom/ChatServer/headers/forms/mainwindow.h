@@ -22,7 +22,7 @@ private slots:
     void on_btn_start_toggled(bool checked);
     void on_btn_close_toggled(bool checked);
     void on_btn_start_clicked(bool checked);
-    void on_newconnect(qintptr handle);
+    void on_newconnect();
   //  void incomingConnection(int  socketDescriptor);
 private:
     Ui::UMainWindow *ui;
