@@ -46,6 +46,7 @@ enum SEX_ERR_TYPE
 };
 class SocketClientEx
 {
+
 public:
 	SocketClientEx();
 
@@ -54,12 +55,33 @@ public:
 	*连接方法，带超时时间
 	*/
 	SEX_ERR_TYPE Connect2(std::string &ip, unsigned short port, unsigned int timeout);
-	
+	/*
+	*断开连接
+	*/
+	SEX_ERR_TYPE DisConnect();
+	/*
+	*接收信息
+	*/
+	int Receive(std::string &msg, unsigned int timeout);
+	/*
+	*接收信息
+	*/
+	int Receive(char* msg, unsigned int len, unsigned int timeout);
+	/*
+	*发送信息
+	*/
+	int Send(std::string &msg, unsigned int timeout);
+	/*
+	*发送信息
+	*/
+	int Send(const char* msg, unsigned int len, unsigned int timeout);
+
 	~SocketClientEx();
 
 private:
 	SOCKETex_t handle;
 	fd_set fs;
+	bool isconnected;
 
 protected:
 

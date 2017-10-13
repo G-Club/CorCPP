@@ -1,6 +1,6 @@
 #include "SocketClientEx.h"
 
-SocketClientEx::SocketClientEx()
+SocketClientEx::SocketClientEx() :isconnected(false)
 {
 
 #ifdef WIN32
@@ -25,6 +25,7 @@ int SocketClientEx::Init()
 
 	return 0;
 }
+
 SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, unsigned int timeout)
 {
 	if (SEX_INVALID_SOCKET == handle)
@@ -44,6 +45,7 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 	SEX_ERR_TYPE errc = SEX_ERR_TYPE::SEX_NONE_ERR;
 
 	unsigned long ul = 1;
+
 	do
 	{
 		ioctl(handle, FIONBIO, &ul); //设置为非阻塞模式
@@ -68,6 +70,7 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 				errc = SEX_ERR_TYPE::SEX_TIME_OUT;
 				break;
 			}
+			isconnected = true;
 		}
 		else if (ret == -1)
 		{
@@ -82,6 +85,130 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 
 	return errc;
 }
+
+/*
+*接收信息
+*返回接收到的字节数
+*/
+int SocketClientEx::Receive(std::string &msg, unsigned int timeout)
+{
+	if (!isconnected || handle == INVALID_SOCKET)
+	{
+		return 0;
+	}
+	char buff[1024] = { 0 };
+	int count = 0;
+	FD_ZERO(&fs);
+	FD_SET(handle, &fs);
+
+	unsigned long ul = 1;
+	ioctl(handle, FIONBIO, &ul); //设置为非阻塞模式
+
+	while (1)
+	{
+		memset(buff, 0, sizeof(buff));
+		int c = 0;
+		c = Receive(buff, sizeof(buff), timeout);
+		if (c > 0)
+		{
+			msg.append(buff, c);
+			count += c;
+			continue;
+		}
+		break;
+	}
+
+	ul = 0;
+	ioctl(handle, FIONBIO, &ul); //设置阻塞模式
+
+	return count;
+}
+/*
+*接收信息
+*返回接收到的字节数
+*/
+int SocketClientEx::Receive(char* msg, unsigned int len, unsigned int timeout)
+{
+	if (!isconnected || handle == INVALID_SOCKET)
+	{
+		return 0;
+	}
+
+	int count = 0;
+	FD_ZERO(&fs);
+	FD_SET(handle, &fs);
+
+	struct timeval timer;
+	timer.tv_sec = timeout;
+	timer.tv_usec = 0;
+
+	int c = select(1, &fs, NULL, NULL, &timer);
+	if (c > 0)
+	{
+		count = recv(handle, msg, len, 0);
+	}
+
+
+	return count;
+}
+/*
+*发送信息
+*返回发送的字节数
+*/
+int SocketClientEx::Send(std::string &msg, unsigned int timeout)
+{
+	if (!isconnected || handle == INVALID_SOCKET)
+	{
+		return 0;
+	}
+	int count = 0;
+
+	count=Send(msg.c_str(), msg.length(),timeout);
+
+	return count;
+}
+/*
+*发送信息
+*返回发送的字节数
+*/
+int SocketClientEx::Send(const char* msg, unsigned int len, unsigned int timeout)
+{
+	if (!isconnected || handle == INVALID_SOCKET)
+	{
+		return 0;
+	}
+
+	char buff[1024] = { 0 };
+	int count = 0;
+	FD_ZERO(&fs);
+	FD_SET(handle, &fs);
+
+	struct timeval timer;
+	timer.tv_sec = timeout;
+	timer.tv_usec = 0;
+
+	int c = select(1, NULL, &fs, NULL, &timer);
+	if (c > 0)
+	{
+		count = send(handle, msg, len, 0);
+	}
+
+
+	return count;
+
+}
+
+
+SEX_ERR_TYPE SocketClientEx::DisConnect()
+{
+	if (handle != INVALID_SOCKET)
+	{
+		close(handle);
+	}
+	return SEX_NONE_ERR;
+}
+
+
 SocketClientEx::~SocketClientEx()
 {
 	if (handle != INVALID_SOCKET)
