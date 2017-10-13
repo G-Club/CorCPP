@@ -1,2 +1,14 @@
 
-language:C++
+language: cpp
+dist: trusty
+script: scons
+compiler:
+  - clang
+  - gcc
+branches:
+  only:
+  - master
+notifications:
+  email:  false
+  
+  
