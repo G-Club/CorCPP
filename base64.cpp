@@ -28,7 +28,9 @@
    René Nyffenegger rene.nyffenegger@adp-gmbh.ch
 
 */
+#ifdef WIN32
 #include "stdafx.h"
+#endif
 #include "include/base64.h"
 #include <iostream>
 
@@ -38,12 +40,13 @@ static const std::string base64_chars =
              "0123456789+/";
 
 
-inline bool Base64Tool::is_base64(unsigned char c) {
-
+inline bool Base64Tool::is_base64(unsigned char c)
+{
   return (isalnum(c) || (c == '+') || (c == '/'));
 }
 
-std::string Base64Tool::base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len) {
+std::string Base64Tool::base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len)
+{
   std::string ret;
   int i = 0;
   int j = 0;

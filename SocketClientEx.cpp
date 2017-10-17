@@ -103,7 +103,7 @@ int SocketClientEx::Receive(std::string &msg, unsigned int timeout)
 
 	unsigned long ul = 1;
 	ioctl(handle, FIONBIO, &ul); //设置为非阻塞模式
-
+ 
 	while (1)
 	{
 		memset(buff, 0, sizeof(buff));
