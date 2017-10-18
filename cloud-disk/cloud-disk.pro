@@ -21,7 +21,14 @@ SOURCES += main.c \
     common/fileupload.c \
     common/thread.c \
     common/uploadfile.c \
-    https_client.c
+    https_client.c \
+    user.cpp \
+    model/user.cpp \
+    common/SocketClientEx.cpp \
+    tools/base64.cpp \
+    tools/SocketClientEx.cpp \
+    common/echo.c \
+    common/fdfs_upload_file.c
 
 HEADERS += \
     include/redis_op.h \
@@ -33,4 +40,9 @@ HEADERS += \
     include/fileinfo_op.h \
     include/mysql_op.h \
     include/mysql_op.h \
-    include/cJSON.h
+    include/cJSON.h \
+    user.h \
+    include/SocketClientEx.h \
+    model/user.h \
+    tools/base64.h \
+    tools/SocketClientEx.h
