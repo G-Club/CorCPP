@@ -9,7 +9,6 @@ SOURCES += main.c \
     common/mysql_api.c \
     fdfs_op.c \
     common/fdfs_op.c \
-    echo.c \
     common/upload_file.c \
     common/userinfo_op.c \
     common/fileinfo_op.c \
@@ -21,14 +20,16 @@ SOURCES += main.c \
     common/fileupload.c \
     common/thread.c \
     common/uploadfile.c \
-    https_client.c \
     user.cpp \
     model/user.cpp \
-    common/SocketClientEx.cpp \
     tools/base64.cpp \
-    tools/SocketClientEx.cpp \
     common/echo.c \
-    common/fdfs_upload_file.c
+    common/fdfs_upload_file.c \
+    model/UserInfo.pb.cc \
+    common/SocketClientEx.cc \
+    tools/SocketClientEx.cc \
+    main.cc \
+    fcgi_echo.c
 
 HEADERS += \
     include/redis_op.h \
@@ -45,4 +46,5 @@ HEADERS += \
     include/SocketClientEx.h \
     model/user.h \
     tools/base64.h \
-    tools/SocketClientEx.h
+    tools/SocketClientEx.h \
+    model/UserInfo.pb.h

@@ -48,7 +48,7 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 
 	do
 	{
-		ioctl(handle, FIONBIO, &ul); //ÉèÖÃÎª·Ç×èÈûÄ£Ê½
+		ioctl(handle, FIONBIO, &ul); //è®¾ç½®ä¸ºéé˜»å¡æ¨¡å¼
 
 		ret = connect(handle, (struct sockaddr*)&serv, sizeof(serv));
 		int ecode = Errcode;
@@ -61,8 +61,8 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 			FD_ZERO(&fs);
 			FD_SET(handle, &fs);
 			/*
-			select»á×èÈûÖ±µ½¼ì²âµ½ÊÂ¼ş»òÔò³¬Ê±£¬Èç¹û³¬Ê±£¬select»á·µ»Ø0£¬
-			Èç¹û¼ì²âµ½ÊÂ¼ş»á·µ»Ø1£¬Èç¹ûÒì³£»á·µ»Ø-1£¬Èç¹ûÊÇÓÉÓÚĞÅºÅÖĞ¶ÏÒıÆğµÄÒì³£errno==EINTR
+			selectä¼šé˜»å¡ç›´åˆ°æ£€æµ‹åˆ°äº‹ä»¶æˆ–åˆ™è¶…æ—¶ï¼Œå¦‚æœè¶…æ—¶ï¼Œselectä¼šè¿”å›0ï¼Œ
+			å¦‚æœæ£€æµ‹åˆ°äº‹ä»¶ä¼šè¿”å›1ï¼Œå¦‚æœå¼‚å¸¸ä¼šè¿”å›-1ï¼Œå¦‚æœæ˜¯ç”±äºä¿¡å·ä¸­æ–­å¼•èµ·çš„å¼‚å¸¸errno==EINTR
 			*/
 			ret = select(0, NULL, &fs, NULL, &timer);
 			if (ret == 0)
@@ -81,14 +81,14 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 	} while (0);
 
 	ul = 0;
-	ioctl(handle, FIONBIO, &ul); //ÉèÖÃ×èÈûÄ£Ê½
+	ioctl(handle, FIONBIO, &ul); //è®¾ç½®é˜»å¡æ¨¡å¼
 
 	return errc;
 }
 
 /*
-*½ÓÊÕĞÅÏ¢
-*·µ»Ø½ÓÊÕµ½µÄ×Ö½ÚÊı
+*æ¥æ”¶ä¿¡æ¯
+*è¿”å›æ¥æ”¶åˆ°çš„å­—èŠ‚æ•°
 */
 int SocketClientEx::Receive(std::string &msg, unsigned int timeout)
 {
@@ -102,7 +102,7 @@ int SocketClientEx::Receive(std::string &msg, unsigned int timeout)
 	FD_SET(handle, &fs);
 
 	unsigned long ul = 1;
-	ioctl(handle, FIONBIO, &ul); //ÉèÖÃÎª·Ç×èÈûÄ£Ê½
+	ioctl(handle, FIONBIO, &ul); //è®¾ç½®ä¸ºéé˜»å¡æ¨¡å¼
  
 	while (1)
 	{
@@ -119,13 +119,13 @@ int SocketClientEx::Receive(std::string &msg, unsigned int timeout)
 	}
 
 	ul = 0;
-	ioctl(handle, FIONBIO, &ul); //ÉèÖÃ×èÈûÄ£Ê½
+	ioctl(handle, FIONBIO, &ul); //è®¾ç½®é˜»å¡æ¨¡å¼
 
 	return count;
 }
 /*
-*½ÓÊÕĞÅÏ¢
-*·µ»Ø½ÓÊÕµ½µÄ×Ö½ÚÊı
+*æ¥æ”¶ä¿¡æ¯
+*è¿”å›æ¥æ”¶åˆ°çš„å­—èŠ‚æ•°
 */
 int SocketClientEx::Receive(char* msg, unsigned int len, unsigned int timeout)
 {
@@ -152,8 +152,8 @@ int SocketClientEx::Receive(char* msg, unsigned int len, unsigned int timeout)
 	return count;
 }
 /*
-*·¢ËÍĞÅÏ¢
-*·µ»Ø·¢ËÍµÄ×Ö½ÚÊı
+*å‘é€ä¿¡æ¯
+*è¿”å›å‘é€çš„å­—èŠ‚æ•°
 */
 int SocketClientEx::Send(std::string &msg, unsigned int timeout)
 {
@@ -168,8 +168,8 @@ int SocketClientEx::Send(std::string &msg, unsigned int timeout)
 	return count;
 }
 /*
-*·¢ËÍĞÅÏ¢
-*·µ»Ø·¢ËÍµÄ×Ö½ÚÊı
+*å‘é€ä¿¡æ¯
+*è¿”å›å‘é€çš„å­—èŠ‚æ•°
 */
 int SocketClientEx::Send(const char* msg, unsigned int len, unsigned int timeout)
 {

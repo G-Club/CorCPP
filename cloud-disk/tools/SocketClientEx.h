@@ -52,27 +52,27 @@ public:
 
 	int Init();
 	/*
-	*Á¬½Ó·½·¨£¬´ø³¬Ê±Ê±¼ä
+	*è¿æ¥æ–¹æ³•ï¼Œå¸¦è¶…æ—¶æ—¶é—´
 	*/
 	SEX_ERR_TYPE Connect2(std::string &ip, unsigned short port, unsigned int timeout);
 	/*
-	*¶Ï¿ªÁ¬½Ó
+	*æ–­å¼€è¿æ¥
 	*/
 	SEX_ERR_TYPE DisConnect();
 	/*
-	*½ÓÊÕĞÅÏ¢
+	*æ¥æ”¶ä¿¡æ¯
 	*/
 	int Receive(std::string &msg, unsigned int timeout);
 	/*
-	*½ÓÊÕĞÅÏ¢
+	*æ¥æ”¶ä¿¡æ¯
 	*/
 	int Receive(char* msg, unsigned int len, unsigned int timeout);
 	/*
-	*·¢ËÍĞÅÏ¢
+	*å‘é€ä¿¡æ¯
 	*/
 	int Send(std::string &msg, unsigned int timeout);
 	/*
-	*·¢ËÍĞÅÏ¢
+	*å‘é€ä¿¡æ¯
 	*/
 	int Send(const char* msg, unsigned int len, unsigned int timeout);
 
