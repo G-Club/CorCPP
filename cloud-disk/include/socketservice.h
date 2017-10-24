@@ -1,0 +1,50 @@
+#ifndef SOCKETSERVICE_H
+#define SOCKETSERVICE_H
+
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <string.h>
+#include <errno.h>
+
+#include "include/socketclientEx.h"
+
+class SocketService
+{
+public:
+    SocketService();
+    ~SocketService();
+int Init();
+void Accept();
+void SetTcpMd5(bool isuse);
+std::string getAddr() const;
+void setAddr(const std::string &value);
+
+uint16_t getPort() const;
+void setPort(const uint16_t &value);
+
+int getFd() const;
+
+std::string getMd5Pwd() const;
+void setMd5Pwd(const std::string &value);
+
+
+private:
+int setMd5Signature();
+
+private:
+
+
+struct tcp_md5sig md5sig;
+bool ismd5;
+std::string md5_pwd;
+int fd;
+std::string addr;
+uint16_t port;
+};
+
+
+
+
+#endif // SOCKETSERVICE_H
