@@ -5,6 +5,7 @@
 #include <functional>
 #include <algorithm>
 #include "model/UserInfo.pb.h"
+#include "include/socketclientex.h"
 
 using namespace std;
 

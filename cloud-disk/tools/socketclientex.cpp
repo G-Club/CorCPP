@@ -1,4 +1,4 @@
-#include "SocketClientEx.h"
+#include "include/socketclientex.h"
 
 SocketClientEx::SocketClientEx() :isconnected(false)
 {
@@ -11,7 +11,7 @@ SocketClientEx::SocketClientEx() :isconnected(false)
 
 #endif
 
-	handle = INVALID_SOCKET;
+    handle = SEX_INVALID_SOCKET;
 }
 
 int SocketClientEx::Init()
@@ -23,17 +23,23 @@ int SocketClientEx::Init()
 		return -1;
 	}
 
+    bzero(&this->sock_addr,sizeof(this->sock_addr));
+    this->sock_addr.sin_family=AF_INET;
+    this->sock_addr.sin_port=htons(this->port);
+    inet_pton(AF_INET,this->address.c_str(),&this->sock_addr.sin_addr);
+
 	return 0;
 }
 
 SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, unsigned int timeout)
 {
+    SEX_ERR_TYPE errc=SEX_ERROR;
+
 	if (SEX_INVALID_SOCKET == handle)
 	{
 		std::cout << " socket handle error" << std::endl;
-		return SEX_ERR_TYPE::SEX_ERROR;
+        return errc;
 	}
-
 	int ret;
 	sockaddr_in serv;
 	memset(&serv, 0, sizeof(serv));
@@ -42,14 +48,13 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 	inet_pton(AF_INET, ip.c_str(), &serv.sin_addr);
 	//serv.sin_addr.S_un.S_addr = inet_addr("192.168.0.162");
 
-	SEX_ERR_TYPE errc = SEX_ERR_TYPE::SEX_NONE_ERR;
+    errc = SEX_NONE_ERR;
 
 	unsigned long ul = 1;
 
 	do
 	{
-		ioctl(handle, FIONBIO, &ul); //设置为非阻塞模式
-
+        ioctl(handle, SEX_FIONBIO, &ul); //设置为非阻塞模式
 		ret = connect(handle, (struct sockaddr*)&serv, sizeof(serv));
 		int ecode = Errcode;
 		if (ret == -1 && ecode == SEX_EINPROGRESS)
@@ -67,23 +72,32 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 			ret = select(0, NULL, &fs, NULL, &timer);
 			if (ret == 0)
 			{
-				errc = SEX_ERR_TYPE::SEX_TIME_OUT;
+                errc = SEX_TIME_OUT;
 				break;
 			}
 			isconnected = true;
+
+            this->address=ip;
+            this->port=port;
+            this->sock_addr=serv;
 		}
 		else if (ret == -1)
 		{
-			errc = SEX_ERR_TYPE::SEX_ERROR;
+            errc = SEX_ERROR;
 			break;
 		}
 
 	} while (0);
 
 	ul = 0;
-	ioctl(handle, FIONBIO, &ul); //设置阻塞模式
+    ioctl(handle, SEX_FIONBIO, &ul); //设置阻塞模式
 
-	return errc;
+    return errc;
+}
+
+SEX_ERR_TYPE SocketClientEx::Connect(int timeout)
+{
+  return Connect2(this->address,this->port,timeout);
 }
 
 /*
@@ -92,7 +106,7 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 */
 int SocketClientEx::Receive(std::string &msg, unsigned int timeout)
 {
-	if (!isconnected || handle == INVALID_SOCKET)
+    if (!isconnected || handle == SEX_INVALID_SOCKET)
 	{
 		return 0;
 	}
@@ -102,7 +116,7 @@ int SocketClientEx::Receive(std::string &msg, unsigned int timeout)
 	FD_SET(handle, &fs);
 
 	unsigned long ul = 1;
-	ioctl(handle, FIONBIO, &ul); //设置为非阻塞模式
+    ioctl(handle, SEX_FIONBIO, &ul); //设置为非阻塞模式
  
 	while (1)
 	{
@@ -119,7 +133,7 @@ int SocketClientEx::Receive(std::string &msg, unsigned int timeout)
 	}
 
 	ul = 0;
-	ioctl(handle, FIONBIO, &ul); //设置阻塞模式
+    ioctl(handle, SEX_FIONBIO, &ul); //设置阻塞模式
 
 	return count;
 }
@@ -129,7 +143,7 @@ int SocketClientEx::Receive(std::string &msg, unsigned int timeout)
 */
 int SocketClientEx::Receive(char* msg, unsigned int len, unsigned int timeout)
 {
-	if (!isconnected || handle == INVALID_SOCKET)
+    if (!isconnected || handle == SEX_INVALID_SOCKET)
 	{
 		return 0;
 	}
@@ -157,7 +171,7 @@ int SocketClientEx::Receive(char* msg, unsigned int len, unsigned int timeout)
 */
 int SocketClientEx::Send(std::string &msg, unsigned int timeout)
 {
-	if (!isconnected || handle == INVALID_SOCKET)
+    if (!isconnected || handle == SEX_INVALID_SOCKET)
 	{
 		return 0;
 	}
@@ -173,12 +187,12 @@ int SocketClientEx::Send(std::string &msg, unsigned int timeout)
 */
 int SocketClientEx::Send(const char* msg, unsigned int len, unsigned int timeout)
 {
-	if (!isconnected || handle == INVALID_SOCKET)
+    if (!isconnected || handle == SEX_INVALID_SOCKET)
 	{
 		return 0;
 	}
 
-	char buff[1024] = { 0 };
+    //char buff[1024] = { 0 };
 	int count = 0;
 	FD_ZERO(&fs);
 	FD_SET(handle, &fs);
@@ -201,7 +215,7 @@ int SocketClientEx::Send(const char* msg, unsigned int len, unsigned int timeout
 
 SEX_ERR_TYPE SocketClientEx::DisConnect()
 {
-	if (handle != INVALID_SOCKET)
+    if (handle != SEX_INVALID_SOCKET)
 	{
 		close(handle);
 	}
@@ -211,11 +225,41 @@ SEX_ERR_TYPE SocketClientEx::DisConnect()
 
 SocketClientEx::~SocketClientEx()
 {
-	if (handle != INVALID_SOCKET)
+    if (handle != SEX_INVALID_SOCKET)
 	{
 		close(handle);
 	}
 #ifdef WIN32
 	WSACleanup();
 #endif
+}
+
+SOCKETex_t SocketClientEx::getHandle() const
+{
+    return handle;
+}
+
+void SocketClientEx::setHandle(const SOCKETex_t &value)
+{
+    handle = value;
+}
+
+std::string SocketClientEx::getAddress() const
+{
+    return address;
+}
+
+void SocketClientEx::setAddress(const std::string &value)
+{
+    address = value;
+}
+
+int SocketClientEx::getPort() const
+{
+    return port;
+}
+
+void SocketClientEx::setPort(int value)
+{
+    port = value;
 }

@@ -8,15 +8,18 @@
 #include <string.h>
 #include <errno.h>
 
-#include "include/socketclientEx.h"
+#include "include/socketclientex.h"
 
 class SocketService
 {
 public:
     SocketService();
     ~SocketService();
-int Init();
+
+int Bind();
+int Listen(int n);
 void Accept();
+int ReuseAddress();
 void SetTcpMd5(bool isuse);
 std::string getAddr() const;
 void setAddr(const std::string &value);
@@ -29,13 +32,13 @@ int getFd() const;
 std::string getMd5Pwd() const;
 void setMd5Pwd(const std::string &value);
 
-
 private:
 int setMd5Signature();
+int Init();
 
 private:
 
-
+struct sockaddr_in sock_addr;
 struct tcp_md5sig md5sig;
 bool ismd5;
 std::string md5_pwd;

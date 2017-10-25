@@ -23,17 +23,17 @@ SOURCES += main.c \
     user.cpp \
     model/user.cpp \
     tools/base64.cpp \
-    common/echo.c \
     common/fdfs_upload_file.c \
     common/SocketClientEx.cc \
-    tools/SocketClientEx.cc \
-    main.cc \
     fcgi_echo.c \
     tcpauth/client-proxy.c \
     tcpauth/common.c \
     tcpauth/wrap.c \
     model/UserInfo.pb.cpp \
-    common/socketservice.cpp
+    common/socketservice.cpp \
+    tools/socketclientex.cpp \
+    main.cpp \
+    tools/socketservice.cpp
 
 HEADERS += \
     include/redis_op.h \
@@ -53,7 +53,7 @@ HEADERS += \
     model/UserInfo.pb.h \
     tcpauth/common.h \
     include/socketservice.h \
-    include/socketclientEx.h
+    include/socketclientex.h
 
 DISTFILES += \
     tcpauth/README.md

@@ -23,11 +23,46 @@ int SocketService::Init()
         std::cout<<"socket init error"<<std::endl;
         return -1;
     }
+
+    bzero(&this->sock_addr,sizeof(this->sock_addr));
+    this->sock_addr.sin_family=AF_INET;
+    this->sock_addr.sin_port=htons(this->port);
+    inet_net_pton(AF_INET,this->addr.c_str(),&this->sock_addr.sin_addr,sizeof(this->sock_addr.sin_addr));
+
     if(ismd5)
     {
         setMd5Signature();
     }
 
+
+
+}
+
+int SocketService::Bind()
+{
+    return bind(this->fd,(struct sockaddr*)&sock_addr,sizeof(sock_addr));
+}
+
+int SocketService::Listen(int n)
+{
+    return listen(fd,n);
+}
+
+void SocketService::Accept()
+{
+    struct sockaddr_in client;
+    bzero(&client,sizeof(client));
+    int ret=accept(this->fd,(struct sockaddr*)&client,sizeof(client));
+
+
+}
+
+int SocketService::ReuseAddress()
+{
+    int ret=0;
+    int flag=1;
+    ret=setsockopt(fd,SOL_SOCKET,SO_REUSEADDR,&flag,sizeof(flag));
+    return ret;
 }
 
 void SocketService::SetTcpMd5(bool isuse)
@@ -43,6 +78,7 @@ std::string SocketService::getAddr() const
 void SocketService::setAddr(const std::string &value)
 {
     addr = value;
+
 }
 
 uint16_t SocketService::getPort() const
