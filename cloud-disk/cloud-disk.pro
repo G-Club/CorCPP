@@ -49,11 +49,11 @@ HEADERS += \
     user.h \
     model/user.h \
     tools/base64.h \
-    tools/SocketClientEx.h \
     model/UserInfo.pb.h \
     tcpauth/common.h \
     include/socketservice.h \
-    include/socketclientex.h
+    include/socketclientex.h \
+    tools/socketclientex.h
 
 DISTFILES += \
     tcpauth/README.md
