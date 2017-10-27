@@ -1,6 +1,6 @@
 #include "include/socketclientex.h"
 
-SocketClientEx::SocketClientEx() :isconnected(false)
+SocketClientEx::SocketClientEx() :handle(SEX_INVALID_SOCKET),isconnected(false)
 {
 
 #ifdef WIN32
@@ -37,16 +37,20 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 
     if (SEX_INVALID_SOCKET == handle)
     {
-        std::cout << " socket handle error" << std::endl;
-        return errc;
+        // std::cout << " socket handle error" << std::endl;
+        int ret= Init();
+        if(ret !=0)
+        {
+            return errc;
+        }
+        // return errc;
     }
     int ret;
-    sockaddr_in serv;
+    struct sockaddr_in serv;
     memset(&serv, 0, sizeof(serv));
     serv.sin_family = AF_INET;
     serv.sin_port = htons(port);
     inet_pton(AF_INET, ip.c_str(), &serv.sin_addr);
-    //serv.sin_addr.S_un.S_addr = inet_addr("192.168.0.162");
 
     errc = SEX_NONE_ERR;
 
@@ -65,20 +69,21 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
             FD_ZERO(&fs);
             FD_SET(handle, &fs);
             /*
-            select会阻塞直到检测到事件或则超时，如果超时，select会返回0，
-            如果检测到事件会返回1，如果异常会返回-1，如果是由于信号中断引起的异常errno==EINTR
-            */
+               select会阻塞直到检测到事件或则超时，如果超时，select会返回0，
+               如果检测到事件会返回1，如果异常会返回-1，如果是由于信号中断引起的异常errno==EINTR
+               */
             ret = select(0, NULL, &fs, NULL, &timer);
-            if (ret == 0)
-            {
-                errc = SEX_TIME_OUT;
-                break;
-            }
-            isconnected = true;
+            std::cout<<"select happen ret is "<<ret<<std::endl;
+    if (ret == 0)
+    {
+        errc = SEX_TIME_OUT;
+        break;
+    }
+    isconnected = true;
 
-            this->address=ip;
-            this->port=port;
-            this->sock_addr=serv;
+    this->address=ip;
+    this->port=port;
+    this->sock_addr=serv;
         }
         else if (ret == -1)
         {
@@ -89,8 +94,12 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
     } while (0);
 
     //设置阻塞模式
-    SetBlock(true);
+    if(this->handle >0)
+    {
+        SetBlock(true);
 
+        std::cout<<"connect successful\n";
+    }
     return errc;
 }
 
@@ -100,9 +109,9 @@ SEX_ERR_TYPE SocketClientEx::Connect(int timeout)
 }
 
 /*
-*接收信息
-*返回接收到的字节数
-*/
+ *接收信息
+ *返回接收到的字节数
+ */
 int SocketClientEx::Receive(std::string &msg, unsigned int timeout)
 {
     if (!isconnected || handle == SEX_INVALID_SOCKET)
@@ -115,12 +124,10 @@ int SocketClientEx::Receive(std::string &msg, unsigned int timeout)
     FD_ZERO(&fs);
     FD_SET(handle, &fs);
 
-    unsigned long ul = 1;
-
     while (1)
     {
         memset(buff, 0, sizeof(buff));
-        int c = 0;
+        size_t c = 0;
         c = Receive(buff, sizeof(buff), timeout);
         if (c > 0)
         {
@@ -139,9 +146,9 @@ int SocketClientEx::Receive(std::string &msg, unsigned int timeout)
     return count;
 }
 /*
-*接收信息
-*返回接收到的字节数
-*/
+ *接收信息
+ *返回接收到的字节数
+ */
 int SocketClientEx::Receive(char* msg, unsigned int len, unsigned int timeout)
 {
     if (!isconnected || handle == SEX_INVALID_SOCKET)
@@ -168,9 +175,9 @@ int SocketClientEx::Receive(char* msg, unsigned int len, unsigned int timeout)
     return count;
 }
 /*
-*发送信息
-*返回发送的字节数
-*/
+ *发送信息
+ *返回发送的字节数
+ */
 int SocketClientEx::Send(std::string &msg, unsigned int timeout)
 {
     if (!isconnected || handle == SEX_INVALID_SOCKET)
@@ -184,9 +191,9 @@ int SocketClientEx::Send(std::string &msg, unsigned int timeout)
     return count;
 }
 /*
-*发送信息
-*返回发送的字节数
-*/
+ *发送信息
+ *返回发送的字节数
+ */
 int SocketClientEx::Send(const char* msg, unsigned int len, unsigned int timeout)
 {
     if (!isconnected || handle == SEX_INVALID_SOCKET)

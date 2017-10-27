@@ -1,4 +1,3 @@
-
 #pragma once
 
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
@@ -61,64 +60,65 @@ enum SEX_ERR_TYPE
 class SocketClientEx
 {
 
-public:
-    SocketClientEx();
+    public:
+        SocketClientEx();
 
-    int Init();
-    /*
-    *连接方法，带超时时间
-    */
-    SEX_ERR_TYPE Connect2(std::string &ip, unsigned short port, unsigned int timeout);
-    /*
-    连接方法
-    */
-    SEX_ERR_TYPE Connect(int timeout);
-    /*
-    *断开连接
-    */
-    SEX_ERR_TYPE DisConnect();
-    /*
-    *接收信息
-    */
-    int Receive(std::string &msg, unsigned int timeout);
-    /*
-    *接收信息
-    */
-    int Receive(char* msg, unsigned int len, unsigned int timeout);
-    /*
-    *发送信息
-    */
-    int Send(std::string &msg, unsigned int timeout);
-    /*
-    *发送信息
-    */
-    int Send(const char* msg, unsigned int len, unsigned int timeout);
+        int Init();
+        /*
+         *     *连接方法，带超时时间
+         *         */
+        SEX_ERR_TYPE Connect2(std::string &ip, unsigned short port, unsigned int timeout);
+        /*
+         *     连接方法
+         *         */
+        SEX_ERR_TYPE Connect(int timeout);
+        /*
+         *     *断开连接
+         *         */
+        SEX_ERR_TYPE DisConnect();
+        /*
+         *     *接收信息
+         *         */
+        int Receive(std::string &msg, unsigned int timeout);
+        /*
+         *     *接收信息
+         *         */
+        int Receive(char* msg, unsigned int len, unsigned int timeout);
+        /*
+         *     *发送信息
+         *         */
+        int Send(std::string &msg, unsigned int timeout);
+        /*
+         *     *发送信息
+         *         */
+        int Send(const char* msg, unsigned int len, unsigned int timeout);
 
-    ~SocketClientEx();
+        ~SocketClientEx();
 
-    SOCKETex_t getHandle() const;
-    void setHandle(const SOCKETex_t &value);
+        SOCKETex_t getHandle() const;
+        void setHandle(const SOCKETex_t &value);
 
-    std::string getAddress() const;
-    void setAddress(const std::string &value);
+        std::string getAddress() const;
+        void setAddress(const std::string &value);
 
-    int getPort() const;
-    void setPort(int value);
+        int getPort() const;
+        void setPort(int value);
 
-private:
+    private:
+        void SetBlock(bool b);
 
-private:
-    SOCKETex_t handle;
-    fd_set fs;
-    bool isconnected;
-    std::string address;
-    int port;
-    struct sockaddr_in sock_addr;
-    struct tcp_md5sig md5sig;
-    bool ismd5;
-    std::string md5_pwd;
+    private:
+        SOCKETex_t handle;
+        fd_set fs;
+        bool isconnected;
+        std::string address;
+        int port;
+        struct sockaddr_in sock_addr;
+        struct tcp_md5sig md5sig;
+        bool ismd5;
+        std::string md5_pwd;
 
-protected:
+    protected:
 
 };
 
