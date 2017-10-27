@@ -59,8 +59,11 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
         //设置为非阻塞模式
         SetBlock(false);
         ret = connect(handle, (struct sockaddr*)&serv, sizeof(serv));
-        int ecode = Errcode;
-        if (ret == -1 && ecode == SEX_EINPROGRESS)
+        if(ret ==0)
+        {
+            break;
+        }
+        if (ret == -1 && errno == SEX_EINPROGRESS)
         {
             struct timeval timer;
             timer.tv_sec = timeout;
@@ -68,22 +71,29 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 
             FD_ZERO(&fs);
             FD_SET(handle, &fs);
+
+            struct sockaddr_in server;
+            socklen_t serv_len;
+            bzero(&server,sizeof(server));
+            //此种情况是因为会有连接成功但是却返回-1的情况 如果是未连接成功 getpeername会返回-1 返回了0就是说明连接成功了.返回即可
+            ret=getpeername(handle,(struct sockaddr*)&server,&serv_len);
+            if(ret==0)
+            {
+                errc = SEX_NONE_ERR;
+                break;
+            }
+
             /*
                select会阻塞直到检测到事件或则超时，如果超时，select会返回0，
                如果检测到事件会返回1，如果异常会返回-1，如果是由于信号中断引起的异常errno==EINTR
                */
             ret = select(0, NULL, &fs, NULL, &timer);
-            std::cout<<"select happen ret is "<<ret<<std::endl;
-    if (ret == 0)
-    {
-        errc = SEX_TIME_OUT;
-        break;
-    }
-    isconnected = true;
+            if (ret == 0)
+            {
+                errc = SEX_TIME_OUT;
+                break;
+            }
 
-    this->address=ip;
-    this->port=port;
-    this->sock_addr=serv;
         }
         else if (ret == -1)
         {
@@ -93,13 +103,16 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 
     } while (0);
 
-    //设置阻塞模式
-    if(this->handle >0)
+    if(errc==SEX_NONE_ERR)
     {
-        SetBlock(true);
-
-        std::cout<<"connect successful\n";
+        isconnected = true;
+        this->address=ip;
+        this->port=port;
+        this->sock_addr=serv;
     }
+    //设置阻塞模式
+    SetBlock(true);
+
     return errc;
 }
 
@@ -184,6 +197,7 @@ int SocketClientEx::Send(std::string &msg, unsigned int timeout)
     {
         return 0;
     }
+
     int count = 0;
 
     count=Send(msg.c_str(), msg.length(),timeout);
@@ -208,15 +222,20 @@ int SocketClientEx::Send(const char* msg, unsigned int len, unsigned int timeout
     struct timeval timer;
     timer.tv_sec = timeout;
     timer.tv_usec = 0;
+
     //非阻塞
-    this->SetBlock(false);
-    int c = select(1, NULL, &fs, NULL, &timer);
-    if (c > 0)
+    // this->SetBlock(false);
+    count = send(handle, msg, len, 0);
+    if(count<0)
     {
-        count = send(handle, msg, len, 0);
+        int c = select(1, NULL, &fs, NULL, &timer);
+        if (c > 0)
+        {
+            count = send(handle, msg, len, 0);
+        }
     }
     //阻塞
-    SetBlock(true);
+    //  SetBlock(true);
 
     return count;
 
@@ -255,7 +274,7 @@ void SocketClientEx::SetBlock(bool b)
     else
     {
         //设置阻塞模式
-        flag &=O_NONBLOCK;
+        flag &= ~O_NONBLOCK;
         fcntl(handle,F_SETFL,flag);
     }
 }
