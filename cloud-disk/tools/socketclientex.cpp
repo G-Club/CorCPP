@@ -24,11 +24,23 @@ int SocketClientEx::Init()
     }
 
     bzero(&this->sock_addr,sizeof(this->sock_addr));
-    this->sock_addr.sin_family=AF_INET;
-    this->sock_addr.sin_port=htons(this->port);
-    inet_pton(AF_INET,this->address.c_str(),&this->sock_addr.sin_addr);
+    StringToSockaddr(&this->sock_addr,this->address,this->port);
+    //set nonblock
+    SetBlock(false);
 
     return 0;
+}
+//反向初始化 给一个网络描述符
+int SocketClientEx::ReverseInit(int fd)
+{
+   this->handle=fd;
+   socklen_t len;
+   if(getpeername(fd,(struct sockaddr*)&this->sock_addr,&len)==0)
+   {
+      SockaddrToString(&this->sock_addr,this->address,this->port);
+      this->isconnected =true;
+   }
+   return 0;
 }
 
 SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, unsigned int timeout)
@@ -37,14 +49,13 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 
     if (SEX_INVALID_SOCKET == handle)
     {
-        // std::cout << " socket handle error" << std::endl;
         int ret= Init();
         if(ret !=0)
         {
             return errc;
         }
-        // return errc;
     }
+
     int ret;
     struct sockaddr_in serv;
     memset(&serv, 0, sizeof(serv));
@@ -57,7 +68,7 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
     do
     {
         //设置为非阻塞模式
-        SetBlock(false);
+        // SetBlock(false);
         ret = connect(handle, (struct sockaddr*)&serv, sizeof(serv));
         if(ret ==0)
         {
@@ -71,23 +82,11 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
 
             FD_ZERO(&fs);
             FD_SET(handle, &fs);
-
-            struct sockaddr_in server;
-            socklen_t serv_len;
-            bzero(&server,sizeof(server));
-            //此种情况是因为会有连接成功但是却返回-1的情况 如果是未连接成功 getpeername会返回-1 返回了0就是说明连接成功了.返回即可
-            ret=getpeername(handle,(struct sockaddr*)&server,&serv_len);
-            if(ret==0)
-            {
-                errc = SEX_NONE_ERR;
-                break;
-            }
-
             /*
                select会阻塞直到检测到事件或则超时，如果超时，select会返回0，
                如果检测到事件会返回1，如果异常会返回-1，如果是由于信号中断引起的异常errno==EINTR
                */
-            ret = select(0, NULL, &fs, NULL, &timer);
+            ret = select(handle+1, NULL, &fs, NULL, &timer);
             if (ret == 0)
             {
                 errc = SEX_TIME_OUT;
@@ -111,7 +110,7 @@ SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, uns
         this->sock_addr=serv;
     }
     //设置阻塞模式
-    SetBlock(true);
+    //SetBlock(true);
 
     return errc;
 }
@@ -146,15 +145,16 @@ int SocketClientEx::Receive(std::string &msg, unsigned int timeout)
         {
             msg.append(buff, c);
             count += c;
+            //小于就是读到了最后几个字节
             if(c<sizeof(buff))
             {
                 break;
             }
             continue;
         }
+
         break;
     }
-
 
     return count;
 }
@@ -176,15 +176,15 @@ int SocketClientEx::Receive(char* msg, unsigned int len, unsigned int timeout)
     struct timeval timer;
     timer.tv_sec = timeout;
     timer.tv_usec = 0;
-    //nonblock
-    SetBlock(false);
-    int c = select(1, &fs, NULL, NULL, &timer);
+
+    int c = select(handle+1, &fs, NULL, NULL, &timer);
     if (c > 0)
     {
         count = recv(handle, msg, len, 0);
+        std::cout<<"recv end count "<<count<<std::endl;
     }
-    //block
-    SetBlock(true);
+    std::cout<<"c is "<<c<<" recv end\n";
+
     return count;
 }
 /*
@@ -236,9 +236,18 @@ int SocketClientEx::Send(const char* msg, unsigned int len, unsigned int timeout
     }
     //阻塞
     //  SetBlock(true);
-
     return count;
 
+}
+
+int SocketClientEx::ReuseAddr()
+{
+    if (handle != SEX_INVALID_SOCKET)
+    {
+        int val=1;
+        return setsockopt(handle,SOL_SOCKET,SO_REUSEADDR,&val,sizeof(val));
+    }
+    return 0;
 }
 
 
@@ -260,6 +269,23 @@ SocketClientEx::~SocketClientEx()
 #ifdef WIN32
     WSACleanup();
 #endif
+}
+
+void SocketClientEx::SockaddrToString(const sockaddr_in *saddr, std::string &address,int &port)
+{
+    char buf[128]={0};
+    inet_ntop(AF_INET,&saddr->sin_addr,buf,sizeof(buf));
+    std::cout<<buf<<std::endl;
+    address=buf;
+    port=ntohs(saddr->sin_port);
+}
+
+void SocketClientEx::StringToSockaddr(sockaddr_in *saddr,const std::string &address, int port)
+{
+    saddr->sin_family=AF_INET;
+    saddr->sin_port=htons(port);
+    inet_pton(AF_INET,address.c_str(),&saddr->sin_addr);
+
 }
 
 void SocketClientEx::SetBlock(bool b)

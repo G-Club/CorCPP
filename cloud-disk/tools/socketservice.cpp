@@ -1,9 +1,9 @@
 #include "include/socketservice.h"
 #include <arpa/inet.h>
-#include<netdb.h>
-#include<unistd.h>
-#include<netinet/tcp.h>
-#include<sys/types.h>
+#include <netdb.h>
+#include <unistd.h>
+#include <netinet/tcp.h>
+#include <sys/types.h>
 
 SocketService::SocketService():ismd5(false)
 {
@@ -25,21 +25,36 @@ int SocketService::Init()
     }
 
     bzero(&this->sock_addr,sizeof(this->sock_addr));
-    this->sock_addr.sin_family=AF_INET;
-    this->sock_addr.sin_port=htons(this->port);
-    inet_net_pton(AF_INET,this->addr.c_str(),&this->sock_addr.sin_addr,sizeof(this->sock_addr.sin_addr));
+
+    StringToSockaddr(&this->sock_addr,this->addr,this->port);
 
     if(ismd5)
     {
-        setMd5Signature();
+        //  setMd5Signature();
     }
 
 
+    return 0;
+}
 
+void SocketService::SockaddrToString(const sockaddr_in *saddr, std::string &address,int &port)
+{
+    char buf[128]={0};
+    inet_ntop(AF_INET,&saddr->sin_addr,buf,sizeof(saddr->sin_addr));
+    address=buf;
+    port=ntohs(saddr->sin_port);
+}
+
+void SocketService::StringToSockaddr(sockaddr_in *saddr,const std::string &address, int port)
+{
+    saddr->sin_family=AF_INET;
+    saddr->sin_port=htons(port);
+    inet_pton(AF_INET,address.c_str(),&saddr->sin_addr);
 }
 
 int SocketService::Bind()
 {
+    Init();
     return bind(this->fd,(struct sockaddr*)&sock_addr,sizeof(sock_addr));
 }
 
@@ -48,13 +63,15 @@ int SocketService::Listen(int n)
     return listen(fd,n);
 }
 
-void SocketService::Accept()
+int SocketService::Accept()
 {
     struct sockaddr_in client;
+    socklen_t len;
     bzero(&client,sizeof(client));
-    int ret=accept(this->fd,(struct sockaddr*)&client,sizeof(client));
-
-
+    int ret=-1;
+    ret=accept(this->fd,(struct sockaddr*)&client,&len);
+    std::cout<<"client connect fd "<<ret<<std::endl;
+    return ret;
 }
 
 int SocketService::ReuseAddress()

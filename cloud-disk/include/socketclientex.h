@@ -64,6 +64,7 @@ class SocketClientEx
         SocketClientEx();
 
         int Init();
+        int ReverseInit(int fd);
         /*
          *     *连接方法，带超时时间
          *         */
@@ -92,6 +93,11 @@ class SocketClientEx
          *     *发送信息
          *         */
         int Send(const char* msg, unsigned int len, unsigned int timeout);
+        /*
+         *     *发送信息
+         *         */
+        int ReuseAddr();
+
 
         ~SocketClientEx();
 
@@ -106,6 +112,8 @@ class SocketClientEx
 
     private:
         void SetBlock(bool b);
+        void SockaddrToString(const sockaddr_in *saddr, std::string &address, int &port);
+        void StringToSockaddr(sockaddr_in *saddr, const std::string &address, int port);
 
     private:
         SOCKETex_t handle;
