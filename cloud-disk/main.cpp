@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "model/UserInfo.pb.h"
 #include "include/socketclientex.h"
+#include "include/socketservice.h"
 
 using namespace std;
 
@@ -21,6 +22,8 @@ int main(int argc, char *argv[])
     int port,ret;
 
     port=atoi(argv[2]);
+
+    /*
     SEX_ERR_TYPE err=SEX_ERROR;
     SocketClientEx client;
     client.setAddress(ip);
@@ -31,6 +34,8 @@ int main(int argc, char *argv[])
         std::cout<<"socket init failed\n";
         return 0;
     }
+    client.ReuseAddr();
+
     err=client.Connect(3);
     if(err==SEX_TIME_OUT)
     {
@@ -43,11 +48,25 @@ int main(int argc, char *argv[])
     std::cout <<"send byte count "<<ret<<std::endl;
 
     std::string mesg;
-    client.Receive(mesg,3);
+    client.Receive(mesg,5);
 
     std::cout<<"recv msg:"<<mesg<<std::endl;
 
     client.DisConnect();
+*/
 
+    SocketService service;
+    SocketClientEx client;
+
+    service.setAddr(ip);
+    service.setPort(port);
+    ret=service.Bind();
+    service.Listen(SOMAXCONN);
+
+    int fd= service.Accept();
+    client.ReverseInit(fd);
+
+    std::cout<<client.getAddress()<<":"<<client.getPort()<<std::endl;
+    client.DisConnect();
     return 0;
 }
