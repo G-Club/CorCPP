@@ -4,6 +4,7 @@
 #include <map>
 #include <functional>
 #include <algorithm>
+#include <boost/asio.hpp>
 #include "model/UserInfo.pb.h"
 #include "include/socketclientex.h"
 #include "include/socketservice.h"
@@ -55,6 +56,12 @@ int main(int argc, char *argv[])
     client.DisConnect();
 */
 
+   boost::asio::io_service ioserv;
+   boost::asio::ip::tcp::socket handle;
+
+   boost::asio::ip::tcp::endpoint ip;
+
+   ioserv.run();
     SocketService service;
     SocketClientEx client;
 
