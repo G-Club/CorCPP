@@ -14,7 +14,7 @@ void writeLog(const char *format,...)
 
 void writeLog(const char *format, va_list arg)
 {
-	char pbString[1024];
+	char pbString[1024]={0};
 
 	vsprintf_s(pbString, format, arg);
 
