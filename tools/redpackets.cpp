@@ -1,3 +1,22 @@
+int GetDecimal(double num,int dec_quat)
+{
+	const double EPSILON = 0.00000001;
+	int result = 0;
+	if (num <= EPSILON && num >= -EPSILON)
+	{
+		return 0;
+	}
+	char format[12] = { 0 };
+	char buf[64] = { 0 };
+	sprintf(format, "%%.%df", dec_quat);
+	
+	sprintf(buf, format, num);
+	std::string ns = buf;
+	int pos = ns.find('.');
+	std::string s = ns.substr(pos+1);
+	result = std::atoi(s.c_str());
+	return result;
+}
 
 double RandDouble(double min, double max)
 {
