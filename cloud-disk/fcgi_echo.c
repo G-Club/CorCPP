@@ -48,7 +48,7 @@ int main ()
     while (FCGI_Accept() >= 0)
     {
         char *contentLength = getenv("CONTENT_LENGTH");
-        int len;
+        int len = 0;
 
         printf("Content-type: text/html\r\n"
                "\r\n"
@@ -59,10 +59,6 @@ int main ()
         if (contentLength != NULL)
         {
             len = strtol(contentLength, NULL, 10);
-        }
-        else
-        {
-            len = 0;
         }
 
         if (len <= 0)
@@ -84,6 +80,7 @@ int main ()
                 }
                putchar(ch);
             }
+            free(p_result);
             printf("\n</pre><p>\n");
         }
 
