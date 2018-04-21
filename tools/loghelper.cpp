@@ -59,14 +59,11 @@ void LogHelper::writeLog(LogLevel lev, const char *format, va_list arg)
 
 	vsprintf(pbString, format, arg);
 
-#if DEBUG_MOD
-
+if (DEBUG_MOD==1)
+{
 	std::cout << pbString << std::endl;
-
 	return;
-
-#else 
-
+}
 	std::string CurrentPath;
 	CurrentPath = GetCurPath();
 	CurrentPath += "/mylog.log";
@@ -99,8 +96,6 @@ void LogHelper::writeLog(LogLevel lev, const char *format, va_list arg)
 
 	fflush(file);
 	fclose(file);
-
-#endif
 
 }
 
