@@ -4,9 +4,10 @@
 #include <stdio.h>
 #include <time.h>
 #include <string>
-#include <varargs.h>
-#include <iostream>
 #include <stdarg.h>
+#include <iostream>
+#include <thread>
+#include <mutex>
 
 using namespace std;
 
@@ -25,13 +26,13 @@ public:
 	};
 	static void FormattTime(time_t t, char *formstr, size_t size, const char*formatt);
 
-	static void writeLog(LogLevel lev, const char *format, ...);
+    static void writeLog(LogLevel lev, bool isdebug, const char *format, ...);
 
 public:
-	static int DEBUG_MOD;
 
 private:
-	static std::string logname;
-	static void read_writeLog(LogLevel lev, const char *format, va_list arg);
+  static std::once_flag flag;
+static FILE *file;
+    static void writeLog(LogLevel lev, bool isdebug,const char *format, va_list &arg);
 };
 
