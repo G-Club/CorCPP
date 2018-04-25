@@ -2,7 +2,7 @@
 #include <fcntl.h>
 #include "loghelper.h"
 
-EPServer::EPServer():port(0),epfd(0)
+EPServer::EPServer():port(0),epfd(0),isstop(false)
 {
 
 }
