@@ -22,8 +22,8 @@ class EPServer
 {
 public:
     typedef void (*CB_OnConnect)(EPServer &server,int cfd,struct sockaddr *client);
-    typedef void (*CB_OnReadabel)(EPServer &server,int cfd,void *arg);
-    typedef void (*CB_OnWriteabel)(EPServer &server,int cfd,void *arg);
+    typedef void (*CB_OnReadable)(EPServer &server,int cfd,void *arg);
+    typedef void (*CB_OnWriteable)(EPServer &server,int cfd,void *arg);
     typedef
     struct _socketdata
     {
@@ -43,7 +43,7 @@ public:
     int Stop();
     void SetPort(uint16_t port);
     void Set_CB_OnConnect(CB_OnConnect cb_onconn);
-    void Set_CB_Oneadabel(CB_OnReadabel cb_onread);
+    void Set_CB_OnReadable(CB_OnReadable cb_onread);
     void SetEpollListen(int fd, int events, void *data);
     void DelEpollListen(int fd);
     uint16_t GetPort();
@@ -56,8 +56,8 @@ private:
     const unsigned int max_event=20;
     struct epoll_event event;
     CB_OnConnect cb_onconnect;
-    CB_OnReadabel cb_onreadabel;
-    CB_OnReadabel cb_onwriteabel;
+    CB_OnReadable cb_onreadable;
+    CB_OnReadable cb_onwriteable;
     DataMap datamap;
 
 private:
