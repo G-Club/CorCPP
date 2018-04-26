@@ -37,9 +37,9 @@ void EPServer::Set_CB_OnConnect(CB_OnConnect cb_onconn)
     this->cb_onconnect=cb_onconn;
 }
 
-void EPServer::Set_CB_Oneadabel(CB_OnReadabel cb_onread)
+void EPServer::Set_CB_Oneadable(CB_OnReadable cb_onread)
 {
-    this->cb_onreadabel=cb_onread;
+    this->cb_onreadable=cb_onread;
 }
 
 void EPServer::SetEpollListen(int fd, int events, void *data)
@@ -206,9 +206,9 @@ void EPServer::OnReadable(void *arg)
     {
         return;
     }
-    if(NULL !=this->cb_onreadabel)
+    if(NULL !=this->cb_onreadable)
     {
-        this->cb_onreadabel(*this,pdoc->fd,pdoc->data);
+        this->cb_onreadable(*this,pdoc->fd,pdoc->data);
     }
 
 }
@@ -221,9 +221,9 @@ void EPServer::OnWriteable(void *arg)
         delete pdoc;
         pdoc=nullptr;
     }
-    if(this->cb_onwriteabel !=NULL)
+    if(this->cb_onwriteable !=NULL)
     {
-      this->cb_onwriteabel(*this,pdoc->fd,pdoc->data);
+      this->cb_onwriteable(*this,pdoc->fd,pdoc->data);
     }
 
 }
