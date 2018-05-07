@@ -25,14 +25,14 @@ public:
 		L_ERROR = 2
 	};
 	static void FormattTime(time_t t, char *formstr, size_t size, const char*formatt);
-
     static void writeLog(LogLevel lev, bool isdebug, const char *format, ...);
 
-public:
 
 private:
   static std::once_flag flag;
+  static std::string CurrentPath;
 static FILE *file;
     static void writeLog(LogLevel lev, bool isdebug,const char *format, va_list &arg);
+    static void Init();
 };
 
