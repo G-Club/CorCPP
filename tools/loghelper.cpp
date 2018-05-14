@@ -48,7 +48,7 @@ void LogHelper::writeLog(LogLevel lev,bool isdebug, const char *format, ...)
     vsprintf(pbString, format, arg);
     va_end(arg);
 
-    char timestr[64] = { 0 };
+    char timestr[256] = { 0 };
     const char *levstr="[INFO]";
     if(lev==LogLevel::L_ERROR)
     {
@@ -58,14 +58,13 @@ void LogHelper::writeLog(LogLevel lev,bool isdebug, const char *format, ...)
     {
         levstr="[WARNING]";
     }
-    FormattTime(time(NULL), timestr, sizeof(timestr), NULL);
+    GetTimestamp(timestr,sizeof(timestr));
     strcat(timestr, " ");
     strcat(timestr,levstr);
-    strcat(timestr, " ");
 
     if (isdebug)
     {
-        std::cout<<timestr<< pbString << std::endl;
+        std::cout<<timestr<<" "<<pbString << std::endl;
         return;
     }
     try
@@ -81,9 +80,9 @@ void LogHelper::writeLog(LogLevel lev,bool isdebug, const char *format, ...)
         std::cout<<"file is NULL"<<std::endl;
         return;
     }
-    fwrite(timestr, strlen(timestr), 1, file);
+   // fwrite(timestr, strlen(timestr), 1, file);
     //参数的值不能正常显示，原因是参数传递错误，fprintf不能正确处理va_list类型的参数
-    fprintf(file, "%s\n",pbString);
+    fprintf(file, "%s %s\n",timestr,pbString);
     fflush(file);
 }
 
@@ -168,5 +167,19 @@ void LogHelper::Init()
         fclose(file);
         file = fopen(CurrentPath.c_str(), "ab+");
     }
+
+}
+
+void LogHelper::GetTimestamp(char *buff, int len)
+{
+    struct timeval tv;
+    struct tm *dc=NULL;
+    char sdate[128]={0};
+
+    gettimeofday(&tv,NULL);
+    memset(sdate,0,sizeof(sdate));
+    dc = localtime(&tv.tv_sec);
+    strftime(sdate,sizeof(sdate),"%Y-%m-%d %H:%M:%S",dc);
+    sprintf(buff,"%s.%.3lu.%.3lu",sdate,tv.tv_usec/1000,tv.tv_usec%1000);
 
 }
