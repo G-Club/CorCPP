@@ -39,7 +39,11 @@ void LogHelper::writeLog(LogLevel lev, const char *format, ...)
 
 }
 */
-
+static const char *lvstr[]={
+    "[INFO]",
+    "[WARNING]",
+    "[ERROR]"
+};
 void LogHelper::writeLog(LogLevel lev,bool isdebug, const char *format, ...)
 {
     char pbString[1024]={0};
@@ -49,15 +53,7 @@ void LogHelper::writeLog(LogLevel lev,bool isdebug, const char *format, ...)
     va_end(arg);
 
     char timestr[256] = { 0 };
-    const char *levstr="[INFO]";
-    if(lev==LogLevel::L_ERROR)
-    {
-        levstr="[ERROR]";
-    }
-    if (lev == LogLevel::L_WARNING)
-    {
-        levstr="[WARNING]";
-    }
+    const char *levstr=lvstr[lev];
     GetTimestamp(timestr,sizeof(timestr));
     strcat(timestr, " ");
     strcat(timestr,levstr);
