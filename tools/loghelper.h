@@ -11,6 +11,10 @@
 
 using namespace std;
 
+#define LOG_INFO(b,s,...)  LogHelper::writeLog(LogHelper::LogLevel::L_INFO,b,s,__VA_ARGS__);
+#define LOG_WARNING(b,s,...)  LogHelper::writeLog(LogHelper::LogLevel::L_WARNING,b,s,__VA_ARGS__);
+#define LOG_ERROR(b,s,...)  LogHelper::writeLog(LogHelper::LogLevel::L_ERROR,b,s,__VA_ARGS__);
+
 class LogHelper
 {
 public:
@@ -35,5 +39,6 @@ private:
     static void writeLog(LogLevel lev, bool isdebug,const char *format, va_list &arg);
     static void Init();
     static void GetTimestamp(char *buff,int len);
+    static std::mutex lock;
 };
 

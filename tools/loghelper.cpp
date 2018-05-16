@@ -7,6 +7,7 @@
 std::once_flag LogHelper::flag;
 FILE *LogHelper::file=NULL;
 std::string LogHelper::CurrentPath="";
+std::mutex LogHelper::lock;
 
 LogHelper::LogHelper()
 {
@@ -44,6 +45,7 @@ static const char *lvstr[]={
     "[WARNING]",
     "[ERROR]"
 };
+
 void LogHelper::writeLog(LogLevel lev,bool isdebug, const char *format, ...)
 {
     char pbString[1024]={0};
@@ -60,6 +62,7 @@ void LogHelper::writeLog(LogLevel lev,bool isdebug, const char *format, ...)
 
     if (isdebug)
     {
+        std::lock_guard<std::mutex> locker(lock);
         std::cout<<timestr<<" "<<pbString << std::endl;
         return;
     }
@@ -78,6 +81,7 @@ void LogHelper::writeLog(LogLevel lev,bool isdebug, const char *format, ...)
     }
    // fwrite(timestr, strlen(timestr), 1, file);
     //参数的值不能正常显示，原因是参数传递错误，fprintf不能正确处理va_list类型的参数
+    std::lock_guard<std::mutex> locker(lock);
     fprintf(file, "%s %s\n",timestr,pbString);
     fflush(file);
 }
