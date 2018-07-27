@@ -15,7 +15,10 @@ LogHelper::LogHelper()
 
 LogHelper::~LogHelper()
 {
-    fclose(file);
+    if(file !=NULL)
+    {
+        fclose(file);
+    }
 }
 
 
@@ -24,6 +27,9 @@ static std::string GetCurPath()
 #ifdef __linux__
     char *path_name=get_current_dir_name();
     std::string path(path_name);
+#ifdef CURRENT_PATH_MACRO
+    path= CURRENT_PATH_MACRO;
+#endif
     return path;
 #else
 
@@ -66,6 +72,7 @@ void LogHelper::writeLog(LogLevel lev,bool isdebug, const char *format, ...)
         std::cout<<timestr<<" "<<pbString << std::endl;
         return;
     }
+    /*
     try
     {
         std::call_once(flag,Init);
@@ -73,17 +80,20 @@ void LogHelper::writeLog(LogLevel lev,bool isdebug, const char *format, ...)
     {
         std::cout<<"exception:"<<ex.what()<<std::endl;
     }
-
+    */
+    Init();
     if (file == NULL)
     {
         std::cout<<"file is NULL"<<std::endl;
         return;
     }
-   // fwrite(timestr, strlen(timestr), 1, file);
+    // fwrite(timestr, strlen(timestr), 1, file);
     //参数的值不能正常显示，原因是参数传递错误，fprintf不能正确处理va_list类型的参数
     std::lock_guard<std::mutex> locker(lock);
     fprintf(file, "%s %s\n",timestr,pbString);
     fflush(file);
+    fclose(file);
+    file=NULL;
 }
 
 
@@ -134,7 +144,7 @@ void LogHelper::writeLog(LogLevel lev, bool isdebug, const char *format, va_list
 
     fflush(file);
     fclose(file);
-
+    file=NULL;
 }
 
 void LogHelper::FormattTime(time_t t, char *formstr, size_t size, const char*formatt)
@@ -168,6 +178,14 @@ void LogHelper::Init()
         file = fopen(CurrentPath.c_str(), "ab+");
     }
 
+}
+
+
+void LogHelper::GetTimestamp(std::string *result)
+{
+    char sdate[256]={0};
+    GetTimestamp(sdate,sizeof(sdate));
+    *result=sdate;
 }
 
 void LogHelper::GetTimestamp(char *buff, int len)
