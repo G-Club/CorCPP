@@ -1,109 +1,25 @@
 #include "socketclientex.h"
+#include <fcntl.h>
 
 SocketClientEx::SocketClientEx() :peerport(0),clientport(0),isconnected(false)
 {
-
     handle = INVALID_SOCKET;
 }
 
-int SocketClientEx::Init()
+int  SocketClientEx::Connect2(std::string &ip, unsigned short port, unsigned int timeout)
 {
-    this->handle = socket(AF_INET, SOCK_STREAM, S_PROTO_TCP);
-    if (INVALID_SOCKET == this->handle)
-    {
-        std::cout << "create socket error" << std::endl;
-        return -1;
-    }
 
-    return 0;
+    return Connect2(ip.c_str(),port,timeout);
 }
-
-SocketClientEx::SEX_ERR_TYPE  SocketClientEx::Connect2(std::string &ip, unsigned short port, unsigned int timeout)
+int  SocketClientEx::Connect2(const char *ip, unsigned short port, unsigned int timeout)
 {
-    if(INVALID_SOCKET == handle)
+    int errc=0;
+    errc=MyConnectO(ip,port,(int*)&timeout,NULL);
+    if(errc !=-1)
     {
-        Init();
+        this->handle=errc;
+        isconnected=true;
     }
-    if (INVALID_SOCKET == handle)
-    {
-        return SEX_ERR_TYPE::SEX_ERROR;
-    }
-    if(ip.empty() || port<1)
-    {
-        return  SEX_ERR_TYPE::SEX_ERROR;
-    }
-    int ret;
-    struct sockaddr_in serv;
-    memset(&serv, 0, sizeof(serv));
-    serv.sin_family = AF_INET;
-    serv.sin_port = htons(port);
-    inet_pton(AF_INET, ip.c_str(), &serv.sin_addr);
-
-    SEX_ERR_TYPE errc = SEX_ERR_TYPE::SEX_NONE_ERR;
-
-    unsigned long ul = 1;
-
-    do
-    {
-        ioctl(handle, FIONBIO, &ul); //设置为非阻塞模式
-        ret = connect(handle, (struct sockaddr*)&serv, sizeof(serv));
-        int ecode = Errcode;
-
-        if (ret == -1 && ecode == EINPROGRESS)
-        {
-            struct timeval timer;
-            timer.tv_sec = timeout;
-            timer.tv_usec = 0;
-
-            FD_ZERO(&fdset);
-            FD_SET(handle, &fdset);
-            /*
-            select会阻塞直到检测到事件或则超时，如果超时，select会返回0，
-            如果检测到事件会返回1，如果异常会返回-1，如果是由于信号中断引起的异常errno==EINTR
-            */
-            ret = select(handle + 1, NULL, &fdset, NULL, &timer);
-            if (ret == 0)
-            {
-                errc = SEX_ERR_TYPE::SEX_TIME_OUT;
-                Reset();
-                break;
-            }
-
-            if (FD_ISSET(handle, &fdset))
-            {
-                socklen_t len = sizeof(ret);
-                ecode = getsockopt(handle, SOL_SOCKET, SO_ERROR, &ret, &len);
-                /* 如果发生错误，Solaris实现的getsockopt返回-1，
-                   * 把pending error设置给errno. Berkeley实现的
-                   * getsockopt返回0, pending error返回给error.
-                   * 我们需要处理这两种情况 */
-                if (ecode < 0 || ret)
-                {
-                    Reset();
-                    break;
-                }
-            }
-
-            isconnected = true;
-
-            getuseport();
-
-            this->address=ip;
-            this->peerport=port;
-
-        }
-        else if (ret == -1)
-        {
-            errc = SEX_ERR_TYPE::SEX_ERROR;
-            Reset();
-            break;
-        }
-
-    } while (0);
-
-    ul = 0;
-    ioctl(handle, FIONBIO, &ul); //设置阻塞模式
-
     return errc;
 }
 
@@ -119,11 +35,6 @@ int SocketClientEx::Receive(_out_ std::string *msg, unsigned int timeout)
     }
     char buff[1024] = { 0 };
     int count = 0;
-    FD_ZERO(&fdset);
-    FD_SET(handle, &fdset);
-
-    unsigned long ul = 1;
-    ioctl(handle, FIONBIO, &ul); //设置为非阻塞模式
 
     while (1)
     {
@@ -132,15 +43,12 @@ int SocketClientEx::Receive(_out_ std::string *msg, unsigned int timeout)
         c = Receive(buff, sizeof(buff), timeout);
         if (c > 0)
         {
-            msg->append(buff, c);
+            msg->append(buff,c);
             count += c;
             continue;
         }
         break;
     }
-
-    ul = 0;
-    ioctl(handle, FIONBIO, &ul); //设置阻塞模式
 
     return count;
 }
@@ -154,20 +62,8 @@ int SocketClientEx::Receive(_out_ char* msg, unsigned int len, unsigned int time
     {
         return 0;
     }
-
-    int count = 0;
-    FD_ZERO(&fdset);
-    FD_SET(handle, &fdset);
-
-    struct timeval timer;
-    timer.tv_sec = timeout;
-    timer.tv_usec = 0;
-
-    int c = select(1, &fdset, NULL, NULL, &timer);
-    if (c > 0)
-    {
-        count = recv(handle, msg, len, 0);
-    }
+    int count=0;
+    count=MyReadO(this->handle,msg,len,(int*)&timeout,NULL);
 
 
     return count;
@@ -201,35 +97,24 @@ int SocketClientEx::Send(const char* msg, unsigned int len, unsigned int timeout
 
     //  char buff[1024] = { 0 };
     int count = 0;
-    FD_ZERO(&fdset);
-    FD_SET(handle, &fdset);
-
-    struct timeval timer;
-    timer.tv_sec = timeout;
-    timer.tv_usec = 0;
-
-    int c = select(handle + 1, NULL, &fdset, NULL, &timer);
-    if (c > 0)
-    {
-        count = send(handle, msg, len, 0);
-    }
-
+    const char *name="";
+    count =MyWriteO(this->handle,(char*)msg,len,(int*)&timeout,name);
 
     return count;
 
 }
 
 
-SocketClientEx::SEX_ERR_TYPE SocketClientEx::DisConnect()
+int SocketClientEx::Close()
 {
     Reset();
-    return SEX_NONE_ERR;
+    return 0;
 }
 
 /*
 *獲取對端的地址
 */
-std::string SocketClientEx::GetPeerAddress()
+std::string SocketClientEx::GetPeerAddress()const
 {
     return this->address;
 }
@@ -237,14 +122,14 @@ std::string SocketClientEx::GetPeerAddress()
 /*
 *獲取對端的端口
 */
-uint16_t SocketClientEx::GetPeerPort()
+uint16_t SocketClientEx::GetPeerPort() const
 {
     return this->peerport;
 }
 /*
 *獲取本地鏈接使用的端口
 */
-uint16_t SocketClientEx::GetConnPort()
+uint16_t SocketClientEx::GetConnPort() const
 {
     return this->clientport;
 }
@@ -262,9 +147,8 @@ void SocketClientEx::getuseport()
 
 }
 //通过已经建立连接的socket初始化一个客户端
-int SocketClientEx::InitializeBySocket(int fd)
+int SocketClientEx::Attach(int fd)
 {
-    Reset();
     struct sockaddr_in local;
     memset(&local,0,sizeof(local));
     socklen_t slen=sizeof(local);
@@ -273,10 +157,10 @@ int SocketClientEx::InitializeBySocket(int fd)
     {
         return -1;
     }
+    Reset();
     char ipaddr[20]={0};
     inet_ntop(AF_INET,&local.sin_addr.s_addr,ipaddr,sizeof(ipaddr));
     this->address=ipaddr;//服务端的地址
-
     this->peerport=ntohs(local.sin_port);//服务端的端口
     this->isconnected=true;
     this->handle=fd;
@@ -297,18 +181,313 @@ void SocketClientEx::Reset()
     this->peerport=0;
     this->clientport=0;
     this->handle=INVALID_SOCKET;
-    FD_ZERO(&fdset);
     this->isconnected=false;
+}
+
+int SocketClientEx::MyConnectO(const char *host, int port, int *timeout, const char *name)
+{
+    char buf[1024];
+    fd_set rset, wset;
+    struct hostent he, *p;
+    struct sockaddr_in sin;
+    socklen_t len = 0;
+    int sock = -1, ret = 0, err = 0, flags = 0, on = 1;
+    struct timeval t;
+
+    assert(host != NULL);
+
+    if (*timeout < 0)
+        *timeout = 0;
+    int old_timeout = *timeout;
+
+    // invalid server
+    if (host[0] == 0 || port == 0) {
+        return -1;
+    }
+
+    if ((sock = socket(PF_INET, SOCK_STREAM, 0)) < 0) {
+
+
+        return -1;
+    }
+
+    bzero(&sin, sizeof(sin));
+    sin.sin_addr.s_addr = inet_addr(host);
+    if ((sin.sin_addr.s_addr) == INADDR_NONE) {	/* host is not numbers-and-dots ip address */
+        ret = gethostbyname_r(host, &he, buf, sizeof(buf), &p, &err);
+        if (ret < 0) {
+
+
+            close(sock);
+            return -1;
+        }
+        memcpy(&sin.sin_addr.s_addr, he.h_addr, sizeof(sin.sin_addr.s_addr));
+    }
+    sin.sin_family = AF_INET;
+    sin.sin_port = htons(port);
+
+    flags = fcntl(sock, F_GETFL, 0);
+    fcntl(sock, F_SETFL, flags | O_NONBLOCK);
+
+    setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, &on, sizeof(on));
+    ret = connect(sock, (struct sockaddr *) &sin, sizeof(sin));
+    if (ret == 0) {
+        fcntl(sock, F_SETFL, flags);
+
+        return sock;
+    } else {
+        if (errno != EINPROGRESS) {	/* cannot connect to the host */
+
+            close(sock);
+            return -1;
+        }
+
+        FD_ZERO(&rset);
+        FD_SET(sock, &rset);
+        wset = rset;
+        t.tv_sec = *timeout / 1000000, t.tv_usec = *timeout % 1000000;
+        ret = select(sock + 1, &rset, &wset, NULL, &t);
+        if (t.tv_sec * 1000000 + t.tv_usec < 10)
+            t.tv_sec = 0, t.tv_usec = 0;
+        *timeout = t.tv_sec * 1000000 + t.tv_usec;
+        if (ret == 0) {
+
+            close(sock);
+            return -1;
+        }
+
+        if (FD_ISSET(sock, &rset) || FD_ISSET(sock, &wset)) {
+            len = sizeof(err);
+            ret = getsockopt(sock, SOL_SOCKET, SO_ERROR, &err, &len);
+            if (ret < 0) {
+                if (err)
+                    errno = err;
+
+                close(sock);
+                return -1;
+            }
+            if (err) {
+                errno = err;
+
+                close(sock);
+                return -1;
+            }
+            fcntl(sock, F_SETFL, flags);
+
+            return sock;
+        } else {
+
+            close(sock);
+            return -1;
+        }
+    }
+
+    return -1;
+}
+
+/* read data from a socket with timeout control(us) */
+int SocketClientEx::MyReadO(int sock, void *buf, ssize_t len, int *timeout, const char *name)
+{
+    int ret;
+    struct timeval t;
+    fd_set rset;
+    ssize_t nleft, nread;
+    char *ptr;
+
+    if (*timeout < 0)
+        *timeout = 0;
+    int old_timeout = *timeout;
+
+    // invalid sock
+    if (sock < 0) {
+
+        return -1;
+    }
+
+    nleft = len, nread = 0, ptr = (char *) buf;
+    t.tv_sec = *timeout / 1000000, t.tv_usec = *timeout % 1000000;
+
+    while (nleft > 0)
+    {
+        // select socket
+        FD_ZERO(&rset);
+        FD_SET(sock, &rset);
+        ret = select(sock + 1, &rset, NULL, NULL, &t);
+        if (t.tv_sec * 1000000 + t.tv_usec < 10)
+            t.tv_sec = 0, t.tv_usec = 0;
+        if (ret <= 0)
+        {
+            if (ret != 0)
+            {
+
+            }
+            else
+            {
+                break;
+            }
+        }
+        // read data
+        nread = read(sock, ptr, nleft);
+        if (nread < 0) {
+            if (errno == EINTR)
+            {	//系统中断处理
+                continue;
+            }
+
+            break;
+        } else if (nread == 0)
+        {
+            break;
+        }
+        ptr += nread;
+        nleft -= nread;
+    }
+    *timeout = t.tv_sec * 1000000 + t.tv_usec;
+
+    /* return the length of data read from server */
+
+
+    return (len - nleft);
+}
+
+/* read data from a socket with timeout control(us) */
+int SocketClientEx::MyReadOS(int sock, void *buf, ssize_t len, int *timeout, const char *name,const char *stop)
+{
+    int ret;
+    struct timeval t;
+    fd_set rset;
+    ssize_t nleft, nread;
+    char *ptr;
+
+    if (*timeout < 0)
+        *timeout = 0;
+    int old_timeout = *timeout;
+
+    // invalid sock
+    if (sock < 0)
+    {
+        return -1;
+    }
+
+    nleft = len, nread = 0, ptr = (char *) buf;
+    t.tv_sec = *timeout / 1000000, t.tv_usec = *timeout % 1000000;
+
+    while (nleft > 0)
+    {
+        // select socket
+        FD_ZERO(&rset);
+        FD_SET(sock, &rset);
+        ret = select(sock + 1, &rset, NULL, NULL, &t);
+        if (t.tv_sec * 1000000 + t.tv_usec < 10)
+        {
+            t.tv_sec = 0;
+            t.tv_usec = 0;
+        }
+        if (ret <= 0)
+        {
+            if (ret != 0)
+            {
+
+            }
+            else
+            {
+                break;
+            }
+        }
+        // read data
+        nread = read(sock, ptr, nleft);
+        if (nread < 0)
+        {
+            if (errno == EINTR)
+            {
+                continue;
+            }
+
+            break;
+        }
+        else if (nread == 0)
+        {
+
+            break;
+        }
+        ptr += nread;
+        nleft -= nread;
+
+        // check whether there is need to stop reading
+        if (stop != NULL && strstr((char *) buf, stop) != NULL)
+        {
+            break;
+        }
+    }
+    *timeout = t.tv_sec * 1000000 + t.tv_usec;
+
+    /* return the length of data read from server */
+
+
+    return (len - nleft);
+}
+
+/* write data to a socket with timeout control(us) */
+int SocketClientEx::MyWriteO(int sock, void *buf, ssize_t len, int *timeout, const char *name)
+{
+    int ret;
+    struct timeval t;
+    fd_set wset;
+    ssize_t nleft, nwrite;
+    char *ptr;
+
+
+    if (*timeout < 0)
+        *timeout = 0;
+    int old_timeout = *timeout;
+
+    // invalid sock
+    if (sock < 0) {
+
+        return -1;
+    }
+
+    nleft = len, nwrite = 0, ptr = (char *) buf;
+    t.tv_sec = *timeout / 1000000, t.tv_usec = *timeout % 1000000;
+
+    while (nleft > 0) {
+        // select socket
+        FD_ZERO(&wset);
+        FD_SET(sock, &wset);
+        ret = select(sock + 1, NULL, &wset, NULL, &t);
+        if (t.tv_sec * 1000000 + t.tv_usec < 10)
+            t.tv_sec = 0, t.tv_usec = 0;
+        if (ret <= 0) {
+            if (ret != 0)
+                ;
+            else
+                ;
+            return -1;
+        }
+        // write data
+        nwrite = write(sock, ptr, nleft);
+        if (nwrite < 0) {
+            if (errno == EINTR) {	//系统中断处理
+                continue;
+            }
+
+            break;
+        } else if (nwrite == 0) {
+
+            break;
+        }
+        ptr += nwrite;
+        nleft -= nwrite;
+    }
+    *timeout = t.tv_sec * 1000000 + t.tv_usec;
+
+    /* return the length of data read from server */
+
+    return (len - nleft);
 }
 
 
 SocketClientEx::~SocketClientEx()
 {
-    if (handle != INVALID_SOCKET)
-    {
-        close(handle);
-    }
-#ifdef WIN32
-    WSACleanup();
-#endif
+    Reset();
 }

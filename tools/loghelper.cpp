@@ -127,10 +127,16 @@ void LogHelper::FormattTime(time_t t, char *formstr, size_t size, const char*for
     if (formatt == NULL)
     {
         formatt = "%Y-%m-%d %H:%M:%S";
-    }
+}
+  /*
+当我们使用localtime(timestamp)的时候返回是一个指针。
+这个指针的指向是共用的，这时如果有其他线程执行了localtime。。。。会覆盖之前的值！！
+可以考虑localtime_r
+*/   
     struct tm ptm ;
     localtime_r(&t,&ptm);
     strftime(formstr, size, formatt, &ptm);
+
 }
 
 void LogHelper::Init()
