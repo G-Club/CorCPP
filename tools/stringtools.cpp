@@ -155,7 +155,8 @@ bool StringTools::DomainValid(const string &domain)//域名验证
         return regex_match(domain,domainPattern);
     }catch(std::exception &ex)
     {
-        std::cout<<"domain regex valid error:"<<ex.what()<<std::endl;
+        WLOG_ERROR(LOG_ERR_MODEL,"GSMRDNS##%s:%d->domain regex valid error:%s",__FILE__,__LINE__,ex.what());
+
         return false;
     }
 }
@@ -175,7 +176,7 @@ bool StringTools::IpAddressValid(const std::string &address)//IP验证
     }
     catch(std::exception &ex)
     {
-        std::cout<<"IpAddress regex valid error:"<<ex.what()<<std::endl;
+        WLOG_ERROR(LOG_ERR_MODEL,"GSMRDNS##%s:%d->IpAddress regex valid error:%s",__FILE__,__LINE__,ex.what());
         return false;
     }
 }
@@ -279,7 +280,7 @@ int StringTools::IsGsmrDomain(const char* pName, unsigned int uLen)
 
     if( 2 < ii && !strcasecmp("ne", szBuff + ((ii-2)*100)) )
     {
-        return DNS_GSMR_NE;
+        return DnsDomainType::DNS_GSMR_NE;
     }
 
     return DnsDomainType::DNS_GSMR_NOT;
@@ -333,30 +334,6 @@ unsigned char*  StringTools::ustrnstr(unsigned char* s,unsigned char* find, size
     return (s);
 }
 
-
-void StringTools::StringReplace(std::string &source, string fnd, string rep)
-{
-    string::size_type pos = 0;
-    string::size_type srcLen = fnd.size();
-    string::size_type desLen = rep.size();
-    pos=source.find(fnd, pos);
-    while (pos != string::npos)
-    {
-        source.replace(pos, srcLen, rep);
-        pos=source.find(fnd, (pos+desLen));
-    }
-}
-
-void StringTools::StringReplace(std::string &source, const char* fnd, const char* rep)
-{
-    if(fnd==NULL || rep ==NULL)
-    {
-        return;
-    }
-    std::string f=fnd;
-    std::string rpl=rep;
-    StringReplace(source,f,rpl);
-}
 
 StringTools::~StringTools()
 {

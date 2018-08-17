@@ -18,8 +18,6 @@ public:
     static std::string StringTrim(std::string &pstr);
     static void StringSplit(std::string str, std::string &split, std::vector<std::string> *result);
     static void StringSplit(std::string str, const char *split, std::vector<std::string> *result);
-    static void StringReplace(std::string &source, string fnd, string rep);
-    static void StringReplace(std::string &source, const char* fnd, const char* rep);
     static bool DomainValid(const string &domain);//域名验证
     static bool DomainValid(const char *domain);//域名验证
     static bool IpAddressValid(const std::string &address);//IP验证
